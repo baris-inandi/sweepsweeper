@@ -2,22 +2,16 @@
 	import MinesweeperBoard from "$lib/MinesweeperBoard/Board";
 	import Area from "../Area/Area.svelte";
 	export let size: number;
-	export const vh = 45 / size;
-	export const states = ["flagged", "exploded", "number", "empty", "empty", "empty"];
-	let board = new MinesweeperBoard(size);
+	export const vh = (size > 9 ? 60 : 50) / size;
+	export let board = new MinesweeperBoard(size);
 	console.log(board.toString());
 </script>
 
 <div class="select-none w-screen h-screen dark:bg-neutral-900 flex items-center justify-center">
-	<div style={`grid-template-columns: repeat(${size}, minmax(0, 1fr));`} class="grid gap-2 w-fit">
+	<div style={`grid-template-columns: repeat(${size}, minmax(0, 1fr));`} class="grid w-fit">
 		{#each Array(size) as _, i}
 			{#each Array(size) as _, j}
-				<Area
-					visible
-					state={states[Math.floor(Math.random() * states.length)]}
-					num={Math.round(Math.random() * 3)}
-					size={vh}
-				/>
+				<Area isFlagged={false} visible coordinate={board.coordinateAt(i, j)} size={vh} />
 			{/each}
 		{/each}
 	</div>

@@ -1,5 +1,7 @@
 import Coordinate from "./Coordinate/Coordinate";
 
+const MINE_RATIO = 0.12;
+
 export default class Board {
 	private inner: Array<Array<Coordinate>>;
 	private uniqueMemory: Map<string, boolean> = new Map<string, boolean>();
@@ -20,17 +22,24 @@ export default class Board {
 
 	public toString(): string {
 		let out = "";
+		let outShort = "\n";
 		this.inner.forEach((i) => {
 			i.forEach((j) => {
 				out += j.toString() + "  ";
+				outShort += j.toShortString() + "  ";
 			});
 			out += "\n";
+			outShort += "\n";
 		});
-		return out;
+		return out + outShort;
+	}
+
+	public coordinateAt(x: number, y: number) {
+		return this.inner[x][y];
 	}
 
 	public populateWithRandomMines() {
-		const numMines = Math.ceil(this.boardSize ** 2 / 4.85);
+		const numMines = Math.ceil(this.boardSize ** 2 * MINE_RATIO);
 		Array(numMines)
 			.fill(undefined)
 			.forEach(() => {
@@ -39,9 +48,18 @@ export default class Board {
 			});
 		for (let i = 0; i < this.boardSize; i++) {
 			for (let j = 0; j < this.boardSize; j++) {
+				if (this.inner[i][j].isMine()) {
+					continue;
+				}
 				const neighbors = this.inner[i][j].getNeighbors(this.boardSize);
-				console.log("index " + i + j + "has n's:");
-				console.log(neighbors);
+				neighbors.forEach((n) => {
+					n.setValue(this.inner[n.x][n.y].value);
+				});
+				this.inner[i][j].setValue(
+					neighbors.filter((x) => {
+						return x.isMine();
+					}).length
+				);
 			}
 		}
 	}

@@ -2,4 +2,4 @@
 	import Board from "./Board/Board.svelte";
 </script>
 
-<Board size={6} />
+<Board size={4} />

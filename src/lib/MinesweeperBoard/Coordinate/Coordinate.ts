@@ -18,6 +18,19 @@ export default class Coordinate {
 		return `C[(${this.x},${this.y})@${this.value < 0 ? this.value : "+" + this.value}]`;
 	}
 
+	public toShortString(): string {
+		if (this.value == -2) {
+			return "?";
+		}
+		if (this.value == -1) {
+			return "x";
+		}
+		if (this.value == 0) {
+			return " ";
+		}
+		return this.value.toString();
+	}
+
 	public ID(): string {
 		return `${this.x},${this.y}`;
 	}
@@ -46,12 +59,12 @@ export default class Coordinate {
 		return out;
 	}
 
-	public loadValueFromMatrix(memory: Array<Array<Coordinate>>) {
-		this.value = memory[this.x][this.y].value;
-	}
-
 	public isMine() {
 		return this.value == -1;
+	}
+
+	public click() {
+		console.log("UNIMPLEMENTED");
 	}
 
 	public static randomMine(limit: number): Coordinate {
