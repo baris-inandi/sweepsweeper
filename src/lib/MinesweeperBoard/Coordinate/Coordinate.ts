@@ -8,10 +8,15 @@ export default class Coordinate {
 	}
 
 	public toString(): string {
-		return this.x + ", " + this.y;
+		return `(${this.x}, ${this.y})`;
 	}
 
-	public getNeighbors() {
+	public static neighborsOf(x: number, y: number): Coordinate[] {
+		const c = new Coordinate(x, y);
+		return c.getNeighbors();
+	}
+
+	public getNeighbors(): Coordinate[] {
 		const out = [];
 		for (let i = -1; i <= 1; i++) {
 			for (let j = -1; j <= 1; j++) {

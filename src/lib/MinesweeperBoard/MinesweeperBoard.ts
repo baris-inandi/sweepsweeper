@@ -1,5 +1,4 @@
 import SquareMatrix from "./SquareMatrix/SquareMatrix";
-import Coordinate from "./Coordinate/Coordinate";
 
 export default class MinesweeperBoard {
 	public boardSize: number;
@@ -14,5 +13,7 @@ export default class MinesweeperBoard {
 		this.boardSize = boardSize;
 		this.innerMatrix = new SquareMatrix(boardSize);
 		this.innerMatrix.populateWithRandomMines();
+		console.log("Board created:");
+		console.log(this.toString());
 	}
 }

@@ -1,14 +1,23 @@
 export default class MinesweeperArea {
-	public isMine;
-	public value;
-	public isEmpty;
+	public isMine: boolean;
+	public value: number;
+	public isEmpty: boolean;
+
+	public setValue(value: number) {
+		this.isEmpty = false;
+		this.value = value;
+	}
+
+	public markNonEmpty() {
+		this.isEmpty = false;
+	}
 
 	public static emptyArea(): MinesweeperArea {
-		return new MinesweeperArea(0, false, true);
+		return new MinesweeperArea(-1, false, true);
 	}
 
 	public static mine(): MinesweeperArea {
-		return new MinesweeperArea(0, true);
+		return new MinesweeperArea(-1, true);
 	}
 
 	public toString(): string {
