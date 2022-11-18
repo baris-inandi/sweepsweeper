@@ -12,7 +12,10 @@ export default class MinesweeperArea {
 	}
 
 	public toString(): string {
-		return this.isEmpty ? "E " : this.isMine ? "* " : this.value + " ";
+		if (this.isEmpty) {
+			return "E ";
+		}
+		return this.isMine ? "* " : this.value + " ";
 	}
 
 	constructor(value: number, isMine = false, isEmpty = false) {
