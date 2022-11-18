@@ -38,31 +38,23 @@ export default class SquareMatrix {
 				mines.push(c.toString());
 				this.inner[c.x][c.y] = MinesweeperArea.mine();
 			});
-		let out = "ZZZZ|\n";
-		for (let i = 0; i < this.boardSize; i++) {
-			for (let j = 0; j < this.boardSize; j++) {
-				if (this.inner[i][j].isMine) {
-					out += "x ";
-					continue;
-				}
-				const neighboringMines = Coordinate.neighborsOf(j, i).filter((c) => {
-					return mines.includes(c.toString());
-				});
-				console.log(i, j, neighboringMines);
-				out += neighboringMines.length + " ";
-			}
-			out += "\n";
-		}
-		console.log(out);
+		this.inner.forEach((i) => {
+			i.forEach((j) => {
+				
+			});
+		});
+		console.log(mines);
 	}
 
 	private randomUniqueCoordinate(): Coordinate {
 		const limit = this.boardSize;
-		const rand = Coordinate.randomSquareCoordinate(limit);
-		let randStr = Coordinate.randomSquareCoordinate(limit).toString();
+		let rand = Coordinate.randomSquareCoordinate(limit);
+		let randStr = rand.toString();
 		while (this.uniqueMemory.get(randStr)) {
-			randStr = Coordinate.randomSquareCoordinate(limit).toString();
+			rand = Coordinate.randomSquareCoordinate(limit);
+			randStr = rand.toString();
 		}
+		this.uniqueMemory.set(randStr, true);
 		return rand;
 	}
 }

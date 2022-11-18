@@ -12,7 +12,7 @@
 	<div style={`grid-template-columns: repeat(${size}, minmax(0, 1fr));`} class="grid gap-2 w-fit">
 		{#each Array(size) as _, i}
 			{#each Array(size) as _, j}
-				<Area state="grass" num={-1} size={vh} />
+				<Area visible state="grass" num={-1} size={vh} />
 			{/each}
 		{/each}
 	</div>
