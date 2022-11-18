@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MinesweeperBoard from "$lib/MinesweeperBoard/MinesweeperBoard";
+	import MinesweeperBoard from "$lib/MinesweeperBoard/Board";
 	import Area from "../Area/Area.svelte";
 	export let size: number;
 	export const vh = 45 / size;

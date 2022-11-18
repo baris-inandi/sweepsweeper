@@ -1,20 +1,21 @@
 import Coordinate from "./Coordinate/Coordinate";
-import MinesweeperArea from "./SquareMatrix/MinesweeperArea";
 
-export default class SquareMatrix {
-	private inner: Array<Array<MinesweeperArea>>;
+export default class Board {
+	private inner: Array<Array<Coordinate>>;
 	private uniqueMemory: Map<string, boolean> = new Map<string, boolean>();
 	boardSize: number;
 
 	constructor(boardSize: number) {
-		const inner = Array(boardSize).fill([]);
-		for (let i = 0; i < inner.length; i++) {
-			inner[i] = Array(boardSize).fill(MinesweeperArea.emptyArea());
+		const inner = new Array<Array<Coordinate>>();
+		for (let i = 0; i < boardSize; i++) {
+			inner[i] = [];
+			for (let j = 0; j < boardSize; j++) {
+				inner[i][j] = new Coordinate(i, j, 0);
+			}
 		}
 		this.inner = inner;
 		this.boardSize = boardSize;
 		this.populateWithRandomMines();
-		console.log(this.toString());
 	}
 
 	public toString(): string {
@@ -36,22 +37,16 @@ export default class SquareMatrix {
 			.forEach(() => {
 				const c = this.randomUniqueCoordinate();
 				mines.push(c.toString());
-				this.inner[c.x][c.y] = MinesweeperArea.mine();
+				this.inner[c.x][c.y] = new Coordinate(c.x, c.y, -1);
 			});
-		this.inner.forEach((i) => {
-			i.forEach((j) => {
-				
-			});
-		});
-		console.log(mines);
 	}
 
 	private randomUniqueCoordinate(): Coordinate {
 		const limit = this.boardSize;
-		let rand = Coordinate.randomSquareCoordinate(limit);
+		let rand = Coordinate.randomMine(limit);
 		let randStr = rand.toString();
 		while (this.uniqueMemory.get(randStr)) {
-			rand = Coordinate.randomSquareCoordinate(limit);
+			rand = Coordinate.randomMine(limit);
 			randStr = rand.toString();
 		}
 		this.uniqueMemory.set(randStr, true);
