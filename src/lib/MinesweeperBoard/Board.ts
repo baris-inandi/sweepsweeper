@@ -22,7 +22,7 @@ export default class Board {
 		let out = "";
 		this.inner.forEach((i) => {
 			i.forEach((j) => {
-				out += j.toString() + " ";
+				out += j.toString() + "  ";
 			});
 			out += "\n";
 		});
@@ -30,24 +30,29 @@ export default class Board {
 	}
 
 	public populateWithRandomMines() {
-		const mines: string[] = [];
 		const numMines = Math.ceil(this.boardSize ** 2 / 4.85);
 		Array(numMines)
 			.fill(undefined)
 			.forEach(() => {
-				const c = this.randomUniqueCoordinate();
-				mines.push(c.toString());
-				this.inner[c.x][c.y] = new Coordinate(c.x, c.y, -1);
+				const c = this.generateUniqueRandomMineCoordinate();
+				this.inner[c.x][c.y] = c;
 			});
+		for (let i = 0; i < this.boardSize; i++) {
+			for (let j = 0; j < this.boardSize; j++) {
+				const neighbors = this.inner[i][j].getNeighbors(this.boardSize);
+				console.log("index " + i + j + "has n's:");
+				console.log(neighbors);
+			}
+		}
 	}
 
-	private randomUniqueCoordinate(): Coordinate {
+	private generateUniqueRandomMineCoordinate(): Coordinate {
 		const limit = this.boardSize;
 		let rand = Coordinate.randomMine(limit);
-		let randStr = rand.toString();
+		let randStr = rand.ID();
 		while (this.uniqueMemory.get(randStr)) {
 			rand = Coordinate.randomMine(limit);
-			randStr = rand.toString();
+			randStr = rand.ID();
 		}
 		this.uniqueMemory.set(randStr, true);
 		return rand;

@@ -9,32 +9,49 @@ export default class Coordinate {
 		this.value = value;
 	}
 
+	public setValue(value: number) {
+		this.value = value;
+		return value;
+	}
+
 	public toString(): string {
 		return `C[(${this.x},${this.y})@${this.value < 0 ? this.value : "+" + this.value}]`;
 	}
 
-	public static neighborsOf(x: number, y: number): Coordinate[] {
-		const c = new Coordinate(x, y, -2);
-		return c.getNeighbors();
+	public ID(): string {
+		return `${this.x},${this.y}`;
 	}
 
-	public getNeighbors(): Coordinate[] {
+	public static neighborsOf(x: number, y: number, margin: number): Coordinate[] {
+		const c = new Coordinate(x, y, -2);
+		return c.getNeighbors(margin);
+	}
+
+	public getNeighbors(margin: number): Coordinate[] {
 		const out = [];
 		for (let i = -1; i <= 1; i++) {
 			for (let j = -1; j <= 1; j++) {
 				const x = this.x + i;
 				const y = this.y + j;
 				const c = new Coordinate(x, y, -2);
-				if (c.toString() === this.toString()) {
+				if (c.ID() === this.ID()) {
 					continue;
 				}
-				if (x < 0 || y < 0) {
+				if (x < 0 || y < 0 || x >= margin || y >= margin) {
 					continue;
 				}
 				out.push(c);
 			}
 		}
 		return out;
+	}
+
+	public loadValueFromMatrix(memory: Array<Array<Coordinate>>) {
+		this.value = memory[this.x][this.y].value;
+	}
+
+	public isMine() {
+		return this.value == -1;
 	}
 
 	public static randomMine(limit: number): Coordinate {
