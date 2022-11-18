@@ -17,7 +17,7 @@ padding-bottom: ${size / (multiplier * 2)}vh;
     border-top: ${size / (multiplier * 3)}vh solid transparent;
     border-bottom: ${size / (multiplier * 3)}vh solid transparent;
     border-left: ${size / multiplier}vh solid ${flagColor};
-    transform: translateX(-1px);
+    transform: translate(-1px, 1px);
     `}
 	/>
 </div>

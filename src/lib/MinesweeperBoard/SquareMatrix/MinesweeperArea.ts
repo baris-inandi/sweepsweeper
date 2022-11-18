@@ -22,9 +22,9 @@ export default class MinesweeperArea {
 
 	public toString(): string {
 		if (this.isEmpty) {
-			return "E ";
+			return "▒ ";
 		}
-		return this.isMine ? "* " : this.value + " ";
+		return this.isMine ? "x " : this.value + " ";
 	}
 
 	constructor(value: number, isMine = false, isEmpty = false) {
