@@ -28,13 +28,13 @@
 		transition-all duration-100 text-xs text-center flex items-center justify-center
 		${
 			!visible || (isFlagged && coordinate.isEmpty() && !coordinate.isMine())
-				? "bg-lime-300 dark:bg-lime-900"
-				: "bg-gray-100 dark:bg-neutral-800"
+				? "bg-lime-300 dark:bg-[#2c3d29]"
+				: "bg-orange-50 dark:bg-neutral-800"
 		}
 		`}
 	>
 		{#if visible}
-			{#if !coordinate.isEmpty()}
+			{#if coordinate.value > 0}
 				<p
 					class="text-neutral-600 dark:text-neutral-500"
 					style={`font-size: ${size < 4 ? size / 2 : size / 4}vh; font-family: 'Press Start 2P'`}
