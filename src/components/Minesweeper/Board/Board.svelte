@@ -6,12 +6,11 @@
 	export let board = new Board(size, null);
 </script>
 
-<div class="select-none w-screen h-screen dark:bg-neutral-900 flex items-center justify-center">
+<div class="select-none w-screen h-screen flex items-center justify-center">
 	<div style={`grid-template-columns: repeat(${size}, minmax(0, 1fr));`} class="grid w-fit">
 		{#each Array(size) as _, i}
 			{#each Array(size) as _, j}
 				<Area
-					isFlagged={false}
 					onLeftClick={(c) => {
 						board = new Board(size, null); // TODO: remove this
 						board.leftClick(c);
@@ -19,7 +18,12 @@
 						console.log(board.toString());
 					}}
 					onRightClick={(c) => {
+						console.log("cUCMCUCMCUCMCUMCUCJCM");
 						console.log(c);
+						console.log(c);
+						c.flag();
+						board = board;
+						console.log(board.toString());
 					}}
 					coordinate={board.coordinateAt(i, j)}
 					size={vh}

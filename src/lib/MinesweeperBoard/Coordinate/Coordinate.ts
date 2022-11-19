@@ -3,6 +3,7 @@ export default class Coordinate {
 	public y: number;
 	public isHidden = true;
 	public value: number; // -2 for unset, -1 for mine, 0 for empty, 1+ for number value
+	public flagged = false;
 
 	constructor(x: number, y: number, value: number) {
 		this.x = x;
@@ -15,12 +16,18 @@ export default class Coordinate {
 		return value;
 	}
 
+	public flag() {
+		if (this.isHidden) {
+			this.flagged = !this.flagged;
+		}
+	}
+
 	public show() {
 		this.isHidden = false;
 	}
 
 	public toString(): string {
-		return `${this.isHidden ? "H" : "S"}[(${this.x},${this.y})@${
+		return `${this.isFlagged ? "F" : this.isHidden ? "H" : "S"}[(${this.x},${this.y})@${
 			this.value < 0 ? this.value : "+" + this.value
 		}]`;
 	}
