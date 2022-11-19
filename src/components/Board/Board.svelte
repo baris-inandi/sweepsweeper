@@ -6,6 +6,12 @@
 	export let minePercentage: number;
 	$: vh = 60 / size;
 	export let board = new MinesweeperBoard(size, minePercentage, null);
+
+	const leftClickHandler = (c: Coordinate) => {
+		board.leftClick(c);
+		board = board;
+		console.log(board.toString());
+	};
 </script>
 
 <div class="select-none w-screen h-screen flex items-center justify-center">
@@ -15,10 +21,8 @@
 				{#if board.uninitialized}
 					<Area
 						onLeftClick={(c) => {
-							board = new MinesweeperBoard(size, minePercentage, null); // TODO: remove this
-							board.leftClick(c);
+							board.initialize(c);
 							board = board;
-							console.log(board.toString());
 						}}
 						onRightClick={(c) => {}}
 						coordinate={new Coordinate(i, j, -2)}
@@ -26,14 +30,9 @@
 					/>
 				{:else}
 					<Area
-						onLeftClick={(c) => {
-							board = new MinesweeperBoard(size, minePercentage, null); // TODO: remove this
-							board.leftClick(c);
-							board = board;
-							console.log(board.toString());
-						}}
+						onLeftClick={leftClickHandler}
 						onRightClick={(c) => {
-							c.flag();
+							board.rightClick(c);
 							board = board;
 						}}
 						coordinate={board.coordinateAt(i, j)}

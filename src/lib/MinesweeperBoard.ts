@@ -3,6 +3,7 @@ import Coordinate from "./Coordinate/Coordinate";
 export default class MinesweeperBoard {
 	private inner: Array<Array<Coordinate>>;
 	private uniqueMemory: Map<string, boolean> = new Map<string, boolean>();
+	public flagged: Map<string, boolean> = new Map<string, boolean>();
 	public uninitialized = true;
 	public boardSize: number;
 	public mineRatio: number;
@@ -25,6 +26,7 @@ export default class MinesweeperBoard {
 	}
 
 	public initialize(startPoint: Coordinate) {
+		this.uninitialized = false;
 		this.populateWithRandomMines(startPoint);
 		this.flood(startPoint, true);
 	}
@@ -100,7 +102,7 @@ export default class MinesweeperBoard {
 			if (!this.inner[x][y].isHidden) return;
 			if (!this.inner[x][y].isEmpty()) return;
 			if (initialFlood && applied.length > this.boardSize ** 2 * 0.25) return;
-			this.inner[x][y].show();
+			this.inner[x][y].reveal();
 			applied.push(c);
 			this.inner[x][y].getQuadNeighbors(this.boardSize).forEach(fill);
 		};
@@ -111,20 +113,18 @@ export default class MinesweeperBoard {
 		fill(initial);
 		applied.forEach((c) => {
 			c.getQuadNeighbors(this.boardSize).forEach((x) => {
-				this.inner[x.x][x.y].show();
+				this.inner[x.x][x.y].reveal();
 			});
 		});
 	}
 
 	public leftClick(c: Coordinate) {
-		if (this.uninitialized) {
-			this.initialize(c);
-			this.uninitialized = false;
-		}
+		this.flood(c);
+		c.reveal();
 	}
 
 	public rightClick(c: Coordinate) {
-		// c.flag()
-		console.log("UNIMPLEMENTED");
+		this.flagged.set(c.ID(), c.flag());
+		console.log(this.flagged);
 	}
 }

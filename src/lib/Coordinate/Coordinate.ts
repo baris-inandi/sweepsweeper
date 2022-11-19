@@ -20,9 +20,10 @@ export default class Coordinate {
 		if (this.isHidden) {
 			this.flagged = !this.flagged;
 		}
+		return this.flagged;
 	}
 
-	public show() {
+	public reveal() {
 		this.isHidden = false;
 	}
 
