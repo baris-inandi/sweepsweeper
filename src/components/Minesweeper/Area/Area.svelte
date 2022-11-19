@@ -14,34 +14,41 @@
 	}
 </script>
 
-<button
-	on:contextmenu|preventDefault={onRightClick}
-	on:click|preventDefault={onLeftClick}
-	style={`height:${size}vh;width:${size}vh`}
-	class={`
-	transition-all duration-100 text-xs border text-center flex items-center justify-center dark:border-black
-	border-gray-300 bg-gray-100 dark:bg-neutral-800
-	${
-		!(coordinate.isMine() || coordinate.value > 0) &&
-		visible &&
-		"hover:brightness-105 dark:hover:brightness-125 cursor-pointer"
-	}`}
+<div
+	class={(coordinate.x % 2 == 0 && coordinate.y % 2 == 0) ||
+	(coordinate.x % 2 != 0 && coordinate.y % 2 != 0)
+		? "brightness-95 dark:brightness-90"
+		: ""}
 >
-	{#if visible}
-		{#if coordinate.value > 0}
-			<p
-				class="text-neutral-600 dark:text-neutral-500"
-				style={`font-size: ${size < 4 ? size / 2 : size / 4}vh; font-family: 'Press Start 2P'`}
-			>
-				{coordinate.value}
-			</p>
-		{:else if coordinate.isMine()}
-			<div
-				class="rounded-full bg-neutral-600 dark:bg-neutral-500"
-				style={`height:${size / 2.5}vh;width:${size / 2.5}vh`}
-			/>
-		{:else if isFlagged}
-			<Flag {size} />
+	<button
+		on:contextmenu|preventDefault={onRightClick}
+		on:click|preventDefault={onLeftClick}
+		style={`height:${size}vh;width:${size}vh`}
+		class={`
+		transition-all duration-100 text-xs text-center flex items-center justify-center
+		${
+			!visible || (isFlagged && coordinate.isEmpty() && !coordinate.isMine())
+				? "bg-lime-300 dark:bg-lime-900"
+				: "bg-gray-100 dark:bg-neutral-800"
+		}
+		`}
+	>
+		{#if visible}
+			{#if !coordinate.isEmpty()}
+				<p
+					class="text-neutral-600 dark:text-neutral-500"
+					style={`font-size: ${size < 4 ? size / 2 : size / 4}vh; font-family: 'Press Start 2P'`}
+				>
+					{coordinate.value}
+				</p>
+			{:else if coordinate.isMine()}
+				<div
+					class="rounded-full bg-neutral-600 dark:bg-neutral-500"
+					style={`height:${size / 2.5}vh;width:${size / 2.5}vh`}
+				/>
+			{:else if isFlagged}
+				<Flag {size} />
+			{/if}
 		{/if}
-	{/if}
-</button>
+	</button>
+</div>

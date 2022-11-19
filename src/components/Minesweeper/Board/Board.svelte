@@ -12,7 +12,12 @@
 	<div style={`grid-template-columns: repeat(${size}, minmax(0, 1fr));`} class="grid w-fit">
 		{#each Array(size) as _, i}
 			{#each Array(size) as _, j}
-				<Area isFlagged={false} visible coordinate={board.coordinateAt(i, j)} size={vh} />
+				<Area
+					isFlagged={i > 2 && j > 4}
+					visible={i < 8 && j < 10}
+					coordinate={board.coordinateAt(i, j)}
+					size={vh}
+				/>
 			{/each}
 		{/each}
 	</div>

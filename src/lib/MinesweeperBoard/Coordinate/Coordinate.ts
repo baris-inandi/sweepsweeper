@@ -63,6 +63,10 @@ export default class Coordinate {
 		return this.value == -1;
 	}
 
+	public isEmpty() {
+		return this.value == 0;
+	}
+
 	public click() {
 		console.log("UNIMPLEMENTED");
 	}
@@ -73,5 +77,14 @@ export default class Coordinate {
 			Math.floor(Math.random() * (limit - 1)),
 			-1
 		);
+	}
+
+	public static floodFillFromMatrix(
+		origin: Coordinate,
+		matrix: Array<Array<Coordinate>>,
+		floodSet: Set<Coordinate> = new Set<Coordinate>()
+	): Array<Coordinate> {
+		// TODO: UNIMPLEMENTED https://www.geeksforgeeks.org/flood-fill-algorithm-implement-fill-paint/
+		return origin.getNeighbors(matrix.length);
 	}
 }

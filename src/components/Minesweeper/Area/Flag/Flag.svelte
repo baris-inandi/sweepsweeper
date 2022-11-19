@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let size: number;
-	export let multiplier = 4;
+	export let multiplier = 3;
 	export let flagColor = "#fc7338";
 </script>
 
