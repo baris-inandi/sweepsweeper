@@ -50,8 +50,12 @@ export default class MinesweeperBoard {
 		return this.inner[x][y] ? this.inner[x][y] : new Coordinate(x, y, -2);
 	}
 
+	public static calculateNumMines(size: number, ratio: number): number {
+		return Math.ceil(size ** 2 * ratio);
+	}
+
 	public numMines(): number {
-		return Math.ceil(this.boardSize ** 2 * this.mineRatio);
+		return MinesweeperBoard.calculateNumMines(this.boardSize, this.mineRatio);
 	}
 
 	public populateWithRandomMines(startPoint: Coordinate) {
