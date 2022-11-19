@@ -7,7 +7,7 @@ export default class Board {
 	private uniqueMemory: Map<string, boolean> = new Map<string, boolean>();
 	boardSize: number;
 
-	constructor(boardSize: number) {
+	constructor(boardSize: number, startPoint: Coordinate) {
 		const inner = new Array<Array<Coordinate>>();
 		for (let i = 0; i < boardSize; i++) {
 			inner[i] = [];
@@ -17,7 +17,7 @@ export default class Board {
 		}
 		this.inner = inner;
 		this.boardSize = boardSize;
-		this.populateWithRandomMines();
+		this.populateWithRandomMines(startPoint);
 	}
 
 	public toString(): string {
@@ -38,7 +38,11 @@ export default class Board {
 		return this.inner[x][y];
 	}
 
-	public populateWithRandomMines() {
+	public populateWithRandomMines(startPoint: Coordinate) {
+		startPoint.getNeighbors(this.boardSize).forEach((n) => {
+			this.uniqueMemory.set(n.ID(), true);
+		});
+		this.uniqueMemory.set(startPoint.ID(), true);
 		const numMines = Math.ceil(this.boardSize ** 2 * MINE_RATIO);
 		Array(numMines)
 			.fill(undefined)

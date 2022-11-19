@@ -1,9 +1,10 @@
 <script lang="ts">
-	import MinesweeperBoard from "$lib/MinesweeperBoard/Board";
+	import Board from "$lib/MinesweeperBoard/Board";
+	import Coordinate from "$lib/MinesweeperBoard/Coordinate/Coordinate";
 	import Area from "../Area/Area.svelte";
 	export let size: number;
 	export const vh = (size > 9 ? 60 : 50) / size;
-	export let board = new MinesweeperBoard(size);
+	export let board = new Board(size, new Coordinate(1, 1, 0));
 	console.log(board.toString());
 </script>
 
