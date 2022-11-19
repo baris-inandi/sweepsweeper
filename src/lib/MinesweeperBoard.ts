@@ -99,7 +99,7 @@ export default class MinesweeperBoard {
 			const y = c.y;
 			if (!this.inner[x][y].isHidden) return;
 			if (!this.inner[x][y].isEmpty()) return;
-			if (initialFlood && applied.length > this.boardSize ** 2 * 0.5) return;
+			if (initialFlood && applied.length > this.boardSize ** 2 * 0.25) return;
 			this.inner[x][y].show();
 			applied.push(c);
 			this.inner[x][y].getQuadNeighbors(this.boardSize).forEach(fill);
