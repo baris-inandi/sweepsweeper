@@ -27,7 +27,7 @@ export default class Coordinate {
 	}
 
 	public toString(): string {
-		return `${this.isFlagged ? "F" : this.isHidden ? "H" : "S"}[(${this.x},${this.y})@${
+		return `${this.flagged ? "F" : this.isHidden ? "H" : "S"}[(${this.x},${this.y})@${
 			this.value < 0 ? this.value : "+" + this.value
 		}]`;
 	}

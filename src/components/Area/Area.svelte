@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type Coordinate from "$lib/MinesweeperBoard/Coordinate/Coordinate";
+	import type Coordinate from "$lib/Coordinate/Coordinate";
 	import Flag from "./Flag/Flag.svelte";
 	export let size: number;
 	export let coordinate: Coordinate;
@@ -16,8 +16,7 @@
 			onLeftClick(coordinate);
 		}}
 		style={`height:${size}vh;width:${size}vh`}
-		class={`
-		transition-all duration-100 flex items-center justify-center
+		class={`cursor-default flex items-center justify-center
 		${
 			coordinate.isHidden || (coordinate.flagged && coordinate.isEmpty() && !coordinate.isMine())
 				? "bg-lime-300"

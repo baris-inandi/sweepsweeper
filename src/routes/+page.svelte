@@ -1,5 +1,5 @@
 <script>
-	import Minesweeper from "../components/Minesweeper/Minesweeper.svelte";
+	import Game from "../components/Game.svelte";
 </script>
 
-<Minesweeper />
+<Game />

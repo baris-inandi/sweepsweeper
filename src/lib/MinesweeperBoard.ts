@@ -1,14 +1,14 @@
 import Coordinate from "./Coordinate/Coordinate";
 
-const MINE_RATIO = 0.15;
-
-export default class Board {
+export default class MinesweeperBoard {
 	private inner: Array<Array<Coordinate>>;
 	private uniqueMemory: Map<string, boolean> = new Map<string, boolean>();
-	private uninitialized = true;
-	boardSize: number;
+	public uninitialized = true;
+	public boardSize: number;
+	public mineRatio: number;
 
-	constructor(boardSize: number, startPoint: Coordinate | null) {
+	constructor(boardSize: number, minePercentage: number, startPoint: Coordinate | null) {
+		this.mineRatio = minePercentage / 100;
 		const inner = new Array<Array<Coordinate>>();
 		for (let i = 0; i < boardSize; i++) {
 			inner[i] = [];
@@ -40,11 +40,15 @@ export default class Board {
 			out += "\n";
 			outShort += "\n";
 		});
-		return out + outShort;
+		return out + outShort + "\nWith " + this.numMines() + " mines";
 	}
 
 	public coordinateAt(x: number, y: number) {
-		return this.inner[x][y];
+		return this.inner[x][y] ? this.inner[x][y] : new Coordinate(x, y, -2);
+	}
+
+	public numMines(): number {
+		return Math.ceil(this.boardSize ** 2 * this.mineRatio);
 	}
 
 	public populateWithRandomMines(startPoint: Coordinate) {
@@ -52,8 +56,7 @@ export default class Board {
 			this.uniqueMemory.set(n.ID(), true);
 		});
 		this.uniqueMemory.set(startPoint.ID(), true);
-		const numMines = Math.ceil(this.boardSize ** 2 * MINE_RATIO);
-		Array(numMines)
+		Array(this.numMines())
 			.fill(undefined)
 			.forEach(() => {
 				const c = this.generateUniqueRandomMineCoordinate();
