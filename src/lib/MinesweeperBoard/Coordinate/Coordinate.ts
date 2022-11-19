@@ -1,6 +1,7 @@
 export default class Coordinate {
 	public x: number;
 	public y: number;
+	public isHidden = true;
 	public value: number; // -2 for unset, -1 for mine, 0 for empty, 1+ for number value
 
 	constructor(x: number, y: number, value: number) {
@@ -14,21 +15,28 @@ export default class Coordinate {
 		return value;
 	}
 
+	public show() {
+		this.isHidden = false;
+	}
+
 	public toString(): string {
-		return `C[(${this.x},${this.y})@${this.value < 0 ? this.value : "+" + this.value}]`;
+		return `${this.isHidden ? "H" : "S"}[(${this.x},${this.y})@${
+			this.value < 0 ? this.value : "+" + this.value
+		}]`;
 	}
 
 	public toShortString(): string {
+		let out = this.value.toString();
 		if (this.value == -2) {
-			return "?";
+			out = "?";
 		}
 		if (this.value == -1) {
-			return "x";
+			out = "x";
 		}
 		if (this.value == 0) {
-			return " ";
+			out = " ";
 		}
-		return this.value.toString();
+		return (this.isHidden ? "H" : " ") + out;
 	}
 
 	public ID(): string {
@@ -40,7 +48,7 @@ export default class Coordinate {
 		return c.getNeighbors(margin);
 	}
 
-	public getNeighbors(margin: number): Coordinate[] {
+	public getNeighbors(margin: number): Array<Coordinate> {
 		const out = [];
 		for (let i = -1; i <= 1; i++) {
 			for (let j = -1; j <= 1; j++) {
@@ -57,6 +65,24 @@ export default class Coordinate {
 			}
 		}
 		return out;
+	}
+
+	public getQuadNeighbors(margin: number): Array<Coordinate> {
+		const out = new Array<Coordinate>();
+		const tests = [
+			new Coordinate(this.x + 1, this.y, -2),
+			new Coordinate(this.x - 1, this.y, -2),
+			new Coordinate(this.x, this.y + 1, -2),
+			new Coordinate(this.x, this.y - 1, -2)
+		];
+		tests.forEach((x) => {
+			if (x.withinLimitsOfBoard(margin)) out.push(x);
+		});
+		return out;
+	}
+
+	public withinLimitsOfBoard(margin: number) {
+		return !(this.x < 0 || this.x >= margin || this.y < 0 || this.y >= margin);
 	}
 
 	public isMine() {
@@ -77,14 +103,5 @@ export default class Coordinate {
 			Math.floor(Math.random() * (limit - 1)),
 			-1
 		);
-	}
-
-	public static floodFillFromMatrix(
-		origin: Coordinate,
-		matrix: Array<Array<Coordinate>>,
-		floodSet: Set<Coordinate> = new Set<Coordinate>()
-	): Array<Coordinate> {
-		// TODO: UNIMPLEMENTED https://www.geeksforgeeks.org/flood-fill-algorithm-implement-fill-paint/
-		return origin.getNeighbors(matrix.length);
 	}
 }

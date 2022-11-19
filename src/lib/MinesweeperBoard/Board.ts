@@ -1,13 +1,14 @@
 import Coordinate from "./Coordinate/Coordinate";
 
-const MINE_RATIO = 0.12;
+const MINE_RATIO = 0.15;
 
 export default class Board {
 	private inner: Array<Array<Coordinate>>;
 	private uniqueMemory: Map<string, boolean> = new Map<string, boolean>();
+	private uninitialized = true;
 	boardSize: number;
 
-	constructor(boardSize: number, startPoint: Coordinate) {
+	constructor(boardSize: number, startPoint: Coordinate | null) {
 		const inner = new Array<Array<Coordinate>>();
 		for (let i = 0; i < boardSize; i++) {
 			inner[i] = [];
@@ -17,7 +18,15 @@ export default class Board {
 		}
 		this.inner = inner;
 		this.boardSize = boardSize;
+		if (startPoint) {
+			this.uninitialized = false;
+			this.initialize(startPoint);
+		}
+	}
+
+	public initialize(startPoint: Coordinate) {
 		this.populateWithRandomMines(startPoint);
+		this.flood(startPoint, true);
 	}
 
 	public toString(): string {
@@ -78,5 +87,41 @@ export default class Board {
 		}
 		this.uniqueMemory.set(randStr, true);
 		return rand;
+	}
+
+	public flood(origin: Coordinate, initialFlood = true) {
+		const applied = new Array<Coordinate>();
+		const fill = (c: Coordinate) => {
+			const x = c.x;
+			const y = c.y;
+			if (!this.inner[x][y].isHidden) return;
+			if (!this.inner[x][y].isEmpty()) return;
+			if (initialFlood && applied.length > this.boardSize ** 2 * 0.5) return;
+			this.inner[x][y].show();
+			applied.push(c);
+			this.inner[x][y].getQuadNeighbors(this.boardSize).forEach(fill);
+		};
+		const initial = this.inner[origin.x][origin.y];
+		if (!initial.isHidden) {
+			return;
+		}
+		fill(initial);
+		applied.forEach((c) => {
+			c.getQuadNeighbors(this.boardSize).forEach((x) => {
+				this.inner[x.x][x.y].show();
+			});
+		});
+	}
+
+	public leftClick(c: Coordinate) {
+		if (this.uninitialized) {
+			this.initialize(c);
+			this.uninitialized = false;
+		}
+	}
+
+	public rightClick(c: Coordinate) {
+		// c.flag()
+		console.log("UNIMPLEMENTED");
 	}
 }

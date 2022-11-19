@@ -3,15 +3,9 @@
 	import Flag from "./Flag/Flag.svelte";
 	export let size: number;
 	export let coordinate: Coordinate;
-	export let visible: boolean;
+	export let onLeftClick: (c: Coordinate) => void;
+	export let onRightClick: (c: Coordinate) => void;
 	export let isFlagged: boolean;
-
-	async function onRightClick(e: Event) {
-		// console.log(e);
-	}
-	async function onLeftClick(e: Event) {
-		// console.log(e);
-	}
 </script>
 
 <div
@@ -21,23 +15,27 @@
 		: ""}
 >
 	<button
-		on:contextmenu|preventDefault={onRightClick}
-		on:click|preventDefault={onLeftClick}
+		on:contextmenu|preventDefault={(e) => {
+			onRightClick(coordinate);
+		}}
+		on:click|preventDefault={(e) => {
+			onLeftClick(coordinate);
+		}}
 		style={`height:${size}vh;width:${size}vh`}
 		class={`
-		transition-all duration-100 text-xs text-center flex items-center justify-center
+		transition-all duration-100 flex items-center justify-center
 		${
-			!visible || (isFlagged && coordinate.isEmpty() && !coordinate.isMine())
+			coordinate.isHidden || (isFlagged && coordinate.isEmpty() && !coordinate.isMine())
 				? "bg-lime-300 dark:bg-[#2c3d29]"
 				: "bg-orange-50 dark:bg-neutral-800"
 		}
 		`}
 	>
-		{#if visible}
+		{#if !coordinate.isHidden}
 			{#if coordinate.value > 0}
 				<p
 					class="text-neutral-600 dark:text-neutral-500"
-					style={`font-size: ${size < 4 ? size / 2 : size / 4}vh; font-family: 'Press Start 2P'`}
+					style={`font-size: ${size < 4 ? size / 2 : size / 3}vh; font-family: 'Press Start 2P'`}
 				>
 					{coordinate.value}
 				</p>
