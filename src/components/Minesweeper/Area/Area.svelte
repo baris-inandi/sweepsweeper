@@ -7,12 +7,7 @@
 	export let onRightClick: (c: Coordinate) => void;
 </script>
 
-<div
-	class={(coordinate.x % 2 == 0 && coordinate.y % 2 == 0) ||
-	(coordinate.x % 2 != 0 && coordinate.y % 2 != 0)
-		? "brightness-95"
-		: ""}
->
+<div class={`${(coordinate.x % 2 == 0) != (coordinate.y % 2 == 0) && "brightness-95"}`}>
 	<button
 		on:contextmenu|preventDefault={(e) => {
 			onRightClick(coordinate);
