@@ -101,10 +101,6 @@ export default class Coordinate {
 		return this.value == 0;
 	}
 
-	public click() {
-		console.log("UNIMPLEMENTED");
-	}
-
 	public static randomMine(limit: number): Coordinate {
 		return new Coordinate(
 			Math.floor(Math.random() * (limit - 1)),

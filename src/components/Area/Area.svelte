@@ -5,6 +5,7 @@
 	export let coordinate: Coordinate;
 	export let onLeftClick: (c: Coordinate) => void;
 	export let onRightClick: (c: Coordinate) => void;
+	let isExploded = false;
 </script>
 
 <div class={`${(coordinate.x % 2 == 0) != (coordinate.y % 2 == 0) && "brightness-95"}`}>
@@ -13,12 +14,18 @@
 			onRightClick(coordinate);
 		}}
 		on:click|preventDefault={(e) => {
+			if (coordinate.isMine()) {
+				isExploded = true;
+			}
 			onLeftClick(coordinate);
 		}}
 		style={`height:${size}vh;width:${size}vh`}
 		class={`cursor-default flex items-center justify-center
 		${
-			coordinate.isHidden || (coordinate.flagged && coordinate.isEmpty() && !coordinate.isMine())
+			isExploded
+				? "bg-orange-200"
+				: coordinate.isHidden ||
+				  (coordinate.flagged && coordinate.isEmpty() && !coordinate.isMine())
 				? "bg-lime-300"
 				: "bg-orange-50"
 		}
@@ -36,7 +43,7 @@
 				</p>
 			{:else if coordinate.isMine()}
 				<div
-					class="rounded-full bg-neutral-600"
+					class={`rounded-full ${isExploded ? "bg-orange-600" : "bg-neutral-600"}`}
 					style={`height:${size / 2.5}vh;width:${size / 2.5}vh`}
 				/>
 			{/if}
