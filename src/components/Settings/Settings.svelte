@@ -17,15 +17,19 @@
 				<div>
 					<p>Board size</p>
 					<div class="flex items-center justify-center gap-4">
-						<Slider bind:value={boardSize} min={9} max={32} step={1} />
-						{boardSize.toString()}
+						<Slider bind:value={boardSize} min={6} max={32} step={1} />
+						<span class="w-16 text-right">
+							{boardSize.toString()}
+						</span>
 					</div>
 				</div>
 				<div class="mb-10">
 					<p>Amount of Mines</p>
 					<div class="flex items-center justify-center gap-4">
 						<Slider bind:value={minePercentage} min={5} max={30} step={1} />
-						{minePercentage.toString()}%
+						<span class="w-16 text-right">
+							{minePercentage.toString()}%
+						</span>
 					</div>
 				</div>
 			</div>

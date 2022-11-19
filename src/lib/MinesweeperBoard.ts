@@ -3,7 +3,7 @@ import Coordinate from "./Coordinate/Coordinate";
 export default class MinesweeperBoard {
 	private inner: Array<Array<Coordinate>>;
 	private uniqueMemory: Map<string, boolean> = new Map<string, boolean>();
-	public flagged: Map<string, boolean> = new Map<string, boolean>();
+	public flaggedCoordinates: Array<Coordinate> = [];
 	public uninitialized = true;
 	public boardSize: number;
 	public mineRatio: number;
@@ -141,7 +141,12 @@ export default class MinesweeperBoard {
 
 	public rightClick(c: Coordinate) {
 		const flagged = c.flag();
-		this.flagged.set(c.ID(), flagged);
+		if (flagged && c.isMine()) {
+			this.flaggedCoordinates.push(c);
+		}
+		if (this.flaggedCoordinates.length === this.numMines()) {
+			return 0;
+		}
 		return flagged;
 	}
 }

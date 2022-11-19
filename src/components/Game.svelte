@@ -10,12 +10,9 @@
 	let settingsVisible = false;
 </script>
 
-<Settings bind:visible={settingsVisible} bind:boardSize bind:minePercentage />
-<button
-	on:click={() => {
-		settingsVisible = true;
-	}}>settings</button
->
-<div class="select-none w-screen h-screen flex items-center justify-center gap-8">
-	<Board size={boardSize[0]} minePercentage={minePercentage[0]} />
-</div>
+<main class="select-none antialiased">
+	<Settings bind:visible={settingsVisible} bind:boardSize bind:minePercentage />
+	<div class="w-screen h-screen flex items-center justify-center gap-8">
+		<Board bind:settingsVisible size={boardSize[0]} minePercentage={minePercentage[0]} />
+	</div>
+</main>
