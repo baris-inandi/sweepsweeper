@@ -3,15 +3,20 @@
 	import MinesweeperBoard from "$lib/MinesweeperBoard";
 	import Area from "../Area/Area.svelte";
 	import Panel from "./Panel/Panel.svelte";
+	import Settings from "../Settings/Settings.svelte";
 
 	const DUMP_BOARD_TO_CONSOLE = true;
 
+	export let defaultBoardSize: number;
+	export let defaultMinePercentage: number;
 	export let size: number;
 	export let minePercentage: number;
 	export let settingsVisible: boolean;
 	export let board = new MinesweeperBoard(size, minePercentage, null);
-	let boardStyleStateForGameEndings = "";
 
+	let isUnmuted = true;
+
+	let boardStyleStateForGameEndings = "";
 	if (DUMP_BOARD_TO_CONSOLE) console.log(board.toString());
 
 	$: finalMessage = "";
@@ -31,13 +36,12 @@
 	const sound = async (path: string, vol: number = 0.75) => {
 		if (currentPlayingSounds > 0) return;
 		currentPlayingSounds++;
-		const audio = new Audio(path);
-		audio.volume = vol;
-		await audio.play();
+		forceSound(path, vol);
 		currentPlayingSounds--;
 	};
 
 	const forceSound = async (path: string, vol: number = 0.75) => {
+		if (!isUnmuted) vol = 0;
 		const audio = new Audio(path);
 		audio.volume = vol;
 		await audio.play();
@@ -130,6 +134,14 @@
 		bind:finalMessage
 		{restartCallback}
 		{resetTimer}
+	/>
+	<Settings
+		bind:visible={settingsVisible}
+		bind:boardSize={size}
+		bind:minePercentage
+		bind:isUnmuted
+		{defaultBoardSize}
+		{defaultMinePercentage}
 	/>
 	<div
 		style={`grid-template-columns: repeat(${size}, minmax(0, 1fr)); ${boardStyleStateForGameEndings}`}
