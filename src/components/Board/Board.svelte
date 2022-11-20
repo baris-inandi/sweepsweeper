@@ -115,6 +115,7 @@
 		bind:board
 		bind:minePercentage
 		bind:boardStyleStateForGameEndings
+		bind:finalMessage
 		{resetTimer}
 	/>
 	<div

@@ -24,7 +24,9 @@ export default class Coordinate {
 	}
 
 	public reveal() {
-		this.isHidden = false;
+		if (!this.flagged) {
+			this.isHidden = false;
+		}
 	}
 
 	public toString(): string {

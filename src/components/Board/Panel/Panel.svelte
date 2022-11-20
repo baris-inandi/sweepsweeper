@@ -10,6 +10,7 @@
 	export let board: MinesweeperBoard;
 	export let minePercentage: number;
 	export let boardStyleStateForGameEndings: string;
+	export let finalMessage: string;
 	export let resetTimer: () => void;
 </script>
 
@@ -34,6 +35,7 @@
 			on:click={() => {
 				board = new MinesweeperBoard(size, minePercentage, null);
 				boardStyleStateForGameEndings = "";
+				finalMessage = "";
 				resetTimer();
 			}}
 			class="text-center h-full rounded-md"
