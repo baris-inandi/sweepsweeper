@@ -10,6 +10,7 @@
 
 <div class={`${(coordinate.x % 2 == 0) != (coordinate.y % 2 == 0) && "brightness-95"}`}>
 	<button
+		tabindex="-1"
 		on:contextmenu|preventDefault={(e) => {
 			onRightClick(coordinate);
 		}}
