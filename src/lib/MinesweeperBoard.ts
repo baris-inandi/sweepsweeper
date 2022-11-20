@@ -2,7 +2,7 @@ import Coordinate from "./Coordinate/Coordinate";
 
 export default class MinesweeperBoard {
 	private inner: Array<Array<Coordinate>>;
-	private uniqueMemory: Map<string, boolean> = new Map<string, boolean>();
+	private uniqueMemory: Map<string, boolean> = new Map();
 	public numCorrectFlags = 0;
 	public uninitialized = true;
 	public boardSize: number;
