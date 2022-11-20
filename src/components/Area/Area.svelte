@@ -14,6 +14,10 @@
 			onRightClick(coordinate);
 		}}
 		on:click|preventDefault={(e) => {
+			if (coordinate.flagged) {
+				onRightClick(coordinate);
+				return;
+			}
 			if (coordinate.isMine()) {
 				isExploded = true;
 			}

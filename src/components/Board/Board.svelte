@@ -88,10 +88,6 @@
 
 	const leftClickHandler = (c: Coordinate) => {
 		console.log(board.toString());
-		if (c.flagged) {
-			rightClickHandler(c);
-			return;
-		}
 		let gameContinues = board.leftClick(c);
 		board = board;
 		if (!gameContinues) startExplodingMines();
