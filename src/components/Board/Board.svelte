@@ -4,6 +4,8 @@
 	import Area from "../Area/Area.svelte";
 	import Panel from "./Panel/Panel.svelte";
 
+	const DUMP_BOARD_TO_CONSOLE = false;
+
 	export let size: number;
 	export let minePercentage: number;
 	export let settingsVisible: boolean;
@@ -11,7 +13,7 @@
 	let boardStyleStateForGameEndings = "";
 	let numFlags = board.numMines();
 
-	console.log(board.toString());
+	if (DUMP_BOARD_TO_CONSOLE) console.log(board.toString());
 
 	$: finalMessage = "";
 	$: vh = 60 / size;
@@ -28,14 +30,13 @@
 	let timer = 0;
 
 	let currentPlayingSounds = 0;
-	const sound = (path: string, vol: number = 0.75) => {
+	const sound = async (path: string, vol: number = 0.75) => {
 		if (currentPlayingSounds > 0) return;
 		currentPlayingSounds++;
 		const audio = new Audio(path);
 		audio.volume = vol;
-		audio.play().then(() => {
-			currentPlayingSounds--;
-		});
+		await audio.play();
+		currentPlayingSounds--;
 	};
 
 	const resetTimer = () => {
@@ -46,21 +47,22 @@
 		clearInterval(timerInterval);
 	};
 
-	const startExplodingMines = () => {
+	const startExplodingMines = (startCoordinate: Coordinate) => {
 		stopTimer();
 		finalMessage = "You lost!";
 		const FIRST_MINE_EXPLOSION_TIME = 1000;
 		const LAST_MINE_EXPLOSION_TIME =
 			board.boardSize > 20 ? 5000 : board.boardSize > 12 ? 4000 : 3000;
-		sound("/sounds/soft_pop.mp3");
+		sound("/sounds/explode.mp3");
 		boardStyleStateForGameEndings =
 			"animation:0.5s shake; animation-timing-function: ease-out; pointer-events: none;";
 		board.mines.forEach((mine) => {
 			setTimeout(() => {
+				if (mine.flagged || mine.ID() == startCoordinate.ID()) return;
 				mine.reveal();
 				sound("/sounds/pop.mp3", 0.25);
 				board = board;
-			}, Math.floor(Math.random() * (LAST_MINE_EXPLOSION_TIME - FIRST_MINE_EXPLOSION_TIME + 1) + FIRST_MINE_EXPLOSION_TIME));
+			}, 50 * Math.floor(Math.random() * (LAST_MINE_EXPLOSION_TIME / 50 - FIRST_MINE_EXPLOSION_TIME / 50 + 1) + FIRST_MINE_EXPLOSION_TIME / 50));
 		});
 	};
 
@@ -87,10 +89,10 @@
 	};
 
 	const leftClickHandler = (c: Coordinate) => {
-		console.log(board.toString());
+		if (DUMP_BOARD_TO_CONSOLE) console.log(board.toString());
 		let gameContinues = board.leftClick(c);
 		board = board;
-		if (!gameContinues) startExplodingMines();
+		if (!gameContinues) startExplodingMines(c);
 	};
 
 	let timerInterval: NodeJS.Timeout;
@@ -125,7 +127,7 @@
 						onLeftClick={(c) => {
 							board.initialize(c);
 							board = board;
-							console.log(board.toString());
+							if (DUMP_BOARD_TO_CONSOLE) console.log(board.toString());
 							startTimer();
 						}}
 						onRightClick={(c) => {}}

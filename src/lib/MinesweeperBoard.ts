@@ -3,7 +3,7 @@ import Coordinate from "./Coordinate/Coordinate";
 export default class MinesweeperBoard {
 	private inner: Array<Array<Coordinate>>;
 	private uniqueMemory: Map<string, boolean> = new Map<string, boolean>();
-	public flaggedCoordinates: Array<Coordinate> = [];
+	public numCorrectFlags = 0;
 	public uninitialized = true;
 	public boardSize: number;
 	public mineRatio: number;
@@ -59,7 +59,7 @@ export default class MinesweeperBoard {
 	}
 
 	public populateWithRandomMines(startPoint: Coordinate) {
-		startPoint.getNeighbors(this.boardSize).forEach((n) => {
+		startPoint.getNeighbors(this.boardSize, true).forEach((n) => {
 			this.uniqueMemory.set(n.ID(), true);
 		});
 		this.uniqueMemory.set(startPoint.ID(), true);
@@ -118,7 +118,13 @@ export default class MinesweeperBoard {
 		fill(initial);
 		applied.forEach((c) => {
 			c.getNeighbors(this.boardSize).forEach((x) => {
-				this.inner[x.x][x.y].reveal();
+				if (x.isHidden) {
+					if (this.inner[x.x][x.y].value > 0) {
+						this.inner[x.x][x.y].reveal();
+					} else {
+						this.flood(this.inner[x.x][x.y]);
+					}
+				}
 			});
 		});
 	}
@@ -140,10 +146,14 @@ export default class MinesweeperBoard {
 
 	public rightClick(c: Coordinate) {
 		const flagged = c.flag();
-		if (flagged && c.isMine()) {
-			this.flaggedCoordinates.push(c);
+		if (c.isMine()) {
+			if (flagged) {
+				this.numCorrectFlags++;
+			} else {
+				this.numCorrectFlags--;
+			}
 		}
-		if (this.flaggedCoordinates.length === this.numMines()) {
+		if (this.numCorrectFlags === this.numMines()) {
 			return 0;
 		}
 		return flagged;

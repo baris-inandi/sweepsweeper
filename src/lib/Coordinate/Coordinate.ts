@@ -58,10 +58,12 @@ export default class Coordinate {
 		return c.getNeighbors(margin);
 	}
 
-	public getNeighbors(margin: number): Array<Coordinate> {
+	public getNeighbors(margin: number, large = false): Array<Coordinate> {
 		const out = [];
-		for (let i = -1; i <= 1; i++) {
-			for (let j = -1; j <= 1; j++) {
+		const start = large ? -2 : -1;
+		const end = large ? 2 : 1;
+		for (let i = start; i <= end; i++) {
+			for (let j = start; j <= end; j++) {
 				const x = this.x + i;
 				const y = this.y + j;
 				const c = new Coordinate(x, y, -2);

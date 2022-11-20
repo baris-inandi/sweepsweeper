@@ -11,7 +11,13 @@
 </script>
 
 <main class="select-none antialiased">
-	<Settings bind:visible={settingsVisible} bind:boardSize bind:minePercentage />
+	<Settings
+		bind:visible={settingsVisible}
+		bind:boardSize
+		bind:minePercentage
+		defaultBoardSize={DEFAULT_BOARD_SIZE}
+		defaultMinePercentage={DEFAULT_MINE_PERCENTAGE}
+	/>
 	<div class="w-screen h-screen flex items-center justify-center gap-8">
 		<Board bind:settingsVisible size={boardSize[0]} minePercentage={minePercentage[0]} />
 	</div>
