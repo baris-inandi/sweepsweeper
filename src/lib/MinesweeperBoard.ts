@@ -29,7 +29,7 @@ export default class MinesweeperBoard {
 	public initialize(startPoint: Coordinate) {
 		this.uninitialized = false;
 		this.populateWithRandomMines(startPoint);
-		this.flood(startPoint, true);
+		this.flood(startPoint);
 	}
 
 	public toString(): string {
@@ -100,14 +100,13 @@ export default class MinesweeperBoard {
 		return rand;
 	}
 
-	public flood(origin: Coordinate, initialFlood = true) {
+	public flood(origin: Coordinate) {
 		const applied = new Array<Coordinate>();
 		const fill = (c: Coordinate) => {
 			const x = c.x;
 			const y = c.y;
 			if (!this.inner[x][y].isHidden) return;
 			if (!this.inner[x][y].isEmpty()) return;
-			if (initialFlood && applied.length > this.boardSize ** 2 * 0.25) return;
 			this.inner[x][y].reveal();
 			applied.push(c);
 			this.inner[x][y].getQuadNeighbors(this.boardSize).forEach(fill);
@@ -118,7 +117,7 @@ export default class MinesweeperBoard {
 		}
 		fill(initial);
 		applied.forEach((c) => {
-			c.getQuadNeighbors(this.boardSize).forEach((x) => {
+			c.getNeighbors(this.boardSize).forEach((x) => {
 				this.inner[x.x][x.y].reveal();
 			});
 		});
