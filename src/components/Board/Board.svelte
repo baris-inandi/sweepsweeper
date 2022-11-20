@@ -60,6 +60,7 @@
 	const startExplodingMines = (startCoordinate: Coordinate) => {
 		stopTimer();
 		finalMessage = "You lost!";
+		const MINE_EXPLOSION_STEP = 100;
 		const FIRST_MINE_EXPLOSION_TIME = 1000;
 		const LAST_MINE_EXPLOSION_TIME =
 			board.boardSize > 20 ? 5000 : board.boardSize > 12 ? 4000 : 3000;
@@ -72,7 +73,7 @@
 				mine.reveal();
 				sound("/sounds/pop.mp3", 0.25);
 				board = board;
-			}, 50 * Math.floor(Math.random() * (LAST_MINE_EXPLOSION_TIME / 50 - FIRST_MINE_EXPLOSION_TIME / 50 + 1) + FIRST_MINE_EXPLOSION_TIME / 50));
+			}, MINE_EXPLOSION_STEP * Math.floor(Math.random() * (LAST_MINE_EXPLOSION_TIME / MINE_EXPLOSION_STEP - FIRST_MINE_EXPLOSION_TIME / MINE_EXPLOSION_STEP + 1) + FIRST_MINE_EXPLOSION_TIME / MINE_EXPLOSION_STEP));
 			popSoundsTimeoutBuffer.push(soundInterval);
 		});
 	};
