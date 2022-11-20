@@ -50,7 +50,7 @@ export default class Coordinate {
 		if (this.value === 0) {
 			out = " ";
 		}
-		return (this.isHidden ? "H" : " ") + out;
+		return out;
 	}
 
 	public ID(): string {

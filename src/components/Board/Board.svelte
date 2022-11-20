@@ -11,9 +11,9 @@
 	export let defaultMinePercentage: number;
 	export let size: number;
 	export let minePercentage: number;
-	export let settingsVisible: boolean;
 	export let board = new MinesweeperBoard(size, minePercentage, null);
 
+	let settingsVisible = false;
 	let isUnmuted = true;
 
 	let boardStyleStateForGameEndings = "";
