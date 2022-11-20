@@ -10,6 +10,7 @@
 	export let minePercentage: number;
 	export let boardStyleStateForGameEndings: string;
 	export let finalMessage: string;
+	export let restartCallback: () => void;
 	export let resetTimer: () => void;
 </script>
 
@@ -36,6 +37,7 @@
 				boardStyleStateForGameEndings = "";
 				finalMessage = "";
 				resetTimer();
+				restartCallback();
 			}}
 			class="text-center h-full rounded-md"
 		>

@@ -52,6 +52,7 @@
 		clearInterval(timerInterval);
 	};
 
+	let popSoundsTimeoutBuffer = new Array<NodeJS.Timeout>();
 	const startExplodingMines = (startCoordinate: Coordinate) => {
 		stopTimer();
 		finalMessage = "You lost!";
@@ -62,12 +63,13 @@
 		boardStyleStateForGameEndings =
 			"animation:0.5s shake; animation-timing-function: ease-out; pointer-events: none;";
 		board.mines.forEach((mine) => {
-			setTimeout(() => {
+			const soundInterval = setTimeout(() => {
 				if (mine.flagged || mine.ID() == startCoordinate.ID()) return;
 				mine.reveal();
 				sound("/sounds/pop.mp3", 0.25);
 				board = board;
 			}, 50 * Math.floor(Math.random() * (LAST_MINE_EXPLOSION_TIME / 50 - FIRST_MINE_EXPLOSION_TIME / 50 + 1) + FIRST_MINE_EXPLOSION_TIME / 50));
+			popSoundsTimeoutBuffer.push(soundInterval);
 		});
 	};
 
@@ -108,6 +110,12 @@
 		if (DUMP_BOARD_TO_CONSOLE) console.log(board.toString());
 		startTimer();
 	};
+
+	const restartCallback = () => {
+		popSoundsTimeoutBuffer.forEach((i) => {
+			clearInterval(i);
+		});
+	};
 </script>
 
 <div class="w-screen h-screen flex flex-col items-center justify-center">
@@ -120,6 +128,7 @@
 		bind:minePercentage
 		bind:boardStyleStateForGameEndings
 		bind:finalMessage
+		{restartCallback}
 		{resetTimer}
 	/>
 	<div
