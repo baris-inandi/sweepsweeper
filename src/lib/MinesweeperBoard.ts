@@ -8,6 +8,7 @@ export default class MinesweeperBoard {
 	public boardSize: number;
 	public mineRatio: number;
 	public mines: Array<Coordinate> = [];
+	public numFlags: number;
 
 	constructor(boardSize: number, minePercentage: number, startPoint: Coordinate | null) {
 		this.mineRatio = minePercentage / 100;
@@ -24,6 +25,7 @@ export default class MinesweeperBoard {
 			this.uninitialized = false;
 			this.initialize(startPoint);
 		}
+		this.numFlags = this.numMines();
 	}
 
 	public initialize(startPoint: Coordinate) {
@@ -145,17 +147,26 @@ export default class MinesweeperBoard {
 	}
 
 	public rightClick(c: Coordinate) {
+		// returns:
+		// -1 if win
+		// 0 if no effect
+		// true if flagged
+		// false if un-flagged
+		if (this.numFlags === 0 && !c.flagged) return 0;
 		const flagged = c.flag();
-		if (c.isMine()) {
+		if (flagged === 0) return flagged;
+		else {
 			if (flagged) {
-				this.numCorrectFlags++;
+				// new flag
+				if (c.isMine()) this.numCorrectFlags++;
+				this.numFlags--;
 			} else {
-				this.numCorrectFlags--;
+				// remove flag
+				if (c.isMine()) this.numCorrectFlags--;
+				this.numFlags++;
 			}
 		}
-		if (this.numCorrectFlags === this.numMines()) {
-			return 0;
-		}
+		if (this.numCorrectFlags === this.numMines()) return -1;
 		return flagged;
 	}
 }

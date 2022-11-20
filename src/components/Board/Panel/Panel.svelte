@@ -4,7 +4,6 @@
 	import RestartIcon from "./RestartIcon.svelte";
 	export let vh: number;
 	export let size: number;
-	export let numFlags: number;
 	export let timer: number;
 	export let settingsVisible: boolean;
 	export let board: MinesweeperBoard;
@@ -19,7 +18,7 @@
 		<div class="flex gap-4 items-center">
 			<Flag size={7} />
 			<span class="w-12 text-md text-neutral-600" style="font-family: 'Press Start 2P';">
-				{numFlags}
+				{board.numFlags}
 			</span>
 		</div>
 	</div>

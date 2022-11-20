@@ -4,14 +4,13 @@
 	import Area from "../Area/Area.svelte";
 	import Panel from "./Panel/Panel.svelte";
 
-	const DUMP_BOARD_TO_CONSOLE = false;
+	const DUMP_BOARD_TO_CONSOLE = true;
 
 	export let size: number;
 	export let minePercentage: number;
 	export let settingsVisible: boolean;
 	export let board = new MinesweeperBoard(size, minePercentage, null);
 	let boardStyleStateForGameEndings = "";
-	let numFlags = board.numMines();
 
 	if (DUMP_BOARD_TO_CONSOLE) console.log(board.toString());
 
@@ -24,7 +23,6 @@
 		boardStyleStateForGameEndings = "";
 		finalMessage = "";
 		board = new MinesweeperBoard(size, minePercentage, null);
-		numFlags = MinesweeperBoard.calculateNumMines(size, minePercentage / 100);
 	}
 
 	let timer = 0;
@@ -39,10 +37,17 @@
 		currentPlayingSounds--;
 	};
 
+	const forceSound = async (path: string, vol: number = 0.75) => {
+		const audio = new Audio(path);
+		audio.volume = vol;
+		await audio.play();
+	};
+
 	const resetTimer = () => {
 		timer = 0;
 		clearInterval(timerInterval);
 	};
+
 	const stopTimer = () => {
 		clearInterval(timerInterval);
 	};
@@ -53,7 +58,7 @@
 		const FIRST_MINE_EXPLOSION_TIME = 1000;
 		const LAST_MINE_EXPLOSION_TIME =
 			board.boardSize > 20 ? 5000 : board.boardSize > 12 ? 4000 : 3000;
-		sound("/sounds/explode.mp3");
+		forceSound("/sounds/explode.mp3");
 		boardStyleStateForGameEndings =
 			"animation:0.5s shake; animation-timing-function: ease-out; pointer-events: none;";
 		board.mines.forEach((mine) => {
@@ -69,23 +74,17 @@
 	const win = () => {
 		stopTimer();
 		finalMessage = "You win!";
-		sound("/sounds/win.mp3");
-		boardStyleStateForGameEndings = "back pointer-events: none;";
+		forceSound("/sounds/win.mp3");
+		boardStyleStateForGameEndings =
+			"animation: 1.6s bounce; animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1); pointer-events: none;";
 	};
 
 	const rightClickHandler = (c: Coordinate) => {
-		if (numFlags <= 0 && !c.flagged) return;
 		let flagged = board.rightClick(c);
-		if (flagged) {
-			sound("/sounds/flag.mp3");
-			numFlags--;
-		} else if (c.isHidden) {
-			numFlags++;
-		}
+		if (flagged === 0) return;
+		if (flagged) sound("/sounds/flag.mp3");
+		if (flagged === -1) win();
 		board = board;
-		if (flagged === 0) {
-			win();
-		}
 	};
 
 	const leftClickHandler = (c: Coordinate) => {
@@ -107,7 +106,6 @@
 	<Panel
 		bind:vh
 		bind:size
-		bind:numFlags
 		bind:timer
 		bind:settingsVisible
 		bind:board

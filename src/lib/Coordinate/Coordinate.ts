@@ -17,10 +17,14 @@ export default class Coordinate {
 	}
 
 	public flag() {
+		// true if flagged
+		// false if un-flagged
+		// 0 if no effect
 		if (this.isHidden) {
 			this.flagged = !this.flagged;
+			return this.flagged;
 		}
-		return this.flagged;
+		return 0;
 	}
 
 	public reveal() {
@@ -37,13 +41,13 @@ export default class Coordinate {
 
 	public toShortString(): string {
 		let out = this.value.toString();
-		if (this.value == -2) {
+		if (this.value === -2) {
 			out = "?";
 		}
-		if (this.value == -1) {
+		if (this.value === -1) {
 			out = "x";
 		}
-		if (this.value == 0) {
+		if (this.value === 0) {
 			out = " ";
 		}
 		return (this.isHidden ? "H" : " ") + out;
@@ -98,11 +102,11 @@ export default class Coordinate {
 	}
 
 	public isMine() {
-		return this.value == -1;
+		return this.value === -1;
 	}
 
 	public isEmpty() {
-		return this.value == 0;
+		return this.value === 0;
 	}
 
 	public static randomMine(limit: number): Coordinate {
