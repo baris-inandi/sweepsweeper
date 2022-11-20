@@ -100,6 +100,14 @@
 			timer++;
 		}, 1000);
 	};
+
+	const initialClick = (c: Coordinate) => {
+		board.initialize(c);
+		forceSound("/sounds/start.mp3", 0.5);
+		board = board;
+		if (DUMP_BOARD_TO_CONSOLE) console.log(board.toString());
+		startTimer();
+	};
 </script>
 
 <div class="w-screen h-screen flex flex-col items-center justify-center">
@@ -122,13 +130,8 @@
 			{#each Array(size) as _, j}
 				{#if board.uninitialized}
 					<Area
-						onLeftClick={(c) => {
-							board.initialize(c);
-							board = board;
-							if (DUMP_BOARD_TO_CONSOLE) console.log(board.toString());
-							startTimer();
-						}}
-						onRightClick={(c) => {}}
+						onLeftClick={initialClick}
+						onRightClick={initialClick}
 						coordinate={new Coordinate(i, j, -2)}
 						size={vh}
 					/>
