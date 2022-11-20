@@ -13,7 +13,7 @@
 		on:contextmenu|preventDefault={(e) => {
 			onRightClick(coordinate);
 		}}
-		on:click|preventDefault={(e) => {
+		on:click|preventDefault={(e) => {// test
 			if (coordinate.flagged) {
 				onRightClick(coordinate);
 				return;
