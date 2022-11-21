@@ -32,7 +32,7 @@
 				: coordinate.isHidden ||
 				  (coordinate.flagged && coordinate.isEmpty() && !coordinate.isMine())
 				? "bg-lime-300"
-				: "bg-orange-50"
+				: "bg-orange-100"
 		}
 		`}
 	>
@@ -41,8 +41,19 @@
 		{:else if !coordinate.isHidden}
 			{#if coordinate.value > 0}
 				<p
-					class="text-neutral-600"
-					style={`font-size: ${size < 4 ? size / 2 : size / 3}vh; font-family: 'Press Start 2P'`}
+					class={[
+						"text-sky-600",
+						"text-lime-600",
+						"text-orange-600",
+						"text-purple-600",
+						"text-yellow-500",
+						"text-pink-600",
+						"text-neutral-600",
+						"text-black"
+					][coordinate.value - 1]}
+					style={`filter: contrast(0.7); font-size: ${
+						size < 4 ? size / 2 : size / 3
+					}vh; font-family: 'Press Start 2P'`}
 				>
 					{coordinate.value}
 				</p>

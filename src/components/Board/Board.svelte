@@ -146,7 +146,7 @@
 	/>
 	<div
 		style={`grid-template-columns: repeat(${size}, minmax(0, 1fr)); ${boardStyleStateForGameEndings}`}
-		class="grid w-fit border-2 border-lime-500"
+		class="grid w-fit border-lime-500"
 	>
 		{#each Array(size) as _, i}
 			{#each Array(size) as _, j}
