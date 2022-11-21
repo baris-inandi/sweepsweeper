@@ -104,7 +104,7 @@
 	let timerInterval: NodeJS.Timeout;
 	const startTimer = () => {
 		timerInterval = setInterval(() => {
-			timer++;
+			timer = Math.floor(Date.now() - board.epoch) / 1000;
 		}, 1000);
 	};
 
@@ -117,6 +117,10 @@
 	};
 
 	const restartCallback = () => {
+		board = new MinesweeperBoard(size, minePercentage, null);
+		boardStyleStateForGameEndings = "";
+		finalMessage = "";
+		resetTimer();
 		popSoundsTimeoutBuffer.forEach((i) => {
 			clearInterval(i);
 		});

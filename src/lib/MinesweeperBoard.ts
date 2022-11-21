@@ -33,6 +33,7 @@ export default class MinesweeperBoard {
 		this.uninitialized = false;
 		this.populateWithRandomMines(startPoint);
 		this.flood(startPoint);
+		this.epoch = Date.now();
 	}
 
 	public toString(): string {
