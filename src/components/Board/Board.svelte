@@ -124,18 +124,8 @@
 </script>
 
 <div class="w-screen h-screen flex flex-col items-center justify-center">
-	<Panel
-		bind:vh
-		bind:size
-		bind:timer
-		bind:settingsVisible
-		bind:board
-		bind:minePercentage
-		bind:boardStyleStateForGameEndings
-		bind:finalMessage
-		{restartCallback}
-		{resetTimer}
-	/>
+	<Panel bind:vh bind:size bind:timer bind:settingsVisible bind:board {restartCallback} />
+
 	<Settings
 		bind:visible={settingsVisible}
 		bind:boardSize={size}

@@ -9,6 +9,7 @@ export default class MinesweeperBoard {
 	public mineRatio: number;
 	public mines: Array<Coordinate> = [];
 	public numFlags: number;
+	public epoch = Date.now();
 
 	constructor(boardSize: number, minePercentage: number, startPoint: Coordinate | null) {
 		this.mineRatio = minePercentage / 100;
