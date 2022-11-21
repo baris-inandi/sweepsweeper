@@ -45,13 +45,13 @@
 						"text-sky-600",
 						"text-lime-600",
 						"text-orange-600",
-						"text-purple-600",
+						"text-fuchsia-600",
 						"text-yellow-500",
-						"text-pink-600",
+						"text-pink-500",
 						"text-neutral-600",
 						"text-black"
 					][coordinate.value - 1]}
-					style={`filter: contrast(0.7); font-size: ${
+					style={`filter: contrast(0.5) brightness(1.15); font-size: ${
 						size < 4 ? size / 2 : size / 3
 					}vh; font-family: 'Press Start 2P'`}
 				>
