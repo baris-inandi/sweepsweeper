@@ -27,7 +27,7 @@
 </main>
 
 <style scoped>
-	@media (max-height: 680px) {
+	@media (max-height: 500px) {
 		.outer {
 			display: none;
 		}
