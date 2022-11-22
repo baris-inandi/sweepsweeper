@@ -1,11 +1,10 @@
 <script>
-	import "../styles/global.css";
+	import "/src/global.css";
+	import "/src/tailwind.css";
 </script>
 
 <slot />
 
 <svelte:head>
-	<title>
-		Minesweeper
-	</title>
+	<title>Minesweeper</title>
 </svelte:head>
