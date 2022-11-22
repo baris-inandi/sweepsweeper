@@ -4,6 +4,8 @@
 	import Area from "../Area/Area.svelte";
 	import Panel from "./Panel/Panel.svelte";
 	import Settings from "../Settings/Settings.svelte";
+	import MobileMenu from "./MobileMenu/MobileMenu.svelte";
+	import isMobile from "$lib/utils/isMobile";
 
 	const DUMP_BOARD_TO_CONSOLE = true;
 
@@ -20,15 +22,21 @@
 	if (DUMP_BOARD_TO_CONSOLE) console.log(board.toString());
 
 	$: finalMessage = "";
-	$: vh = 60 / size;
+	$: vh = 55 / size;
 	$: {
 		size;
 		minePercentage;
 		resetTimer();
-		boardStyleStateForGameEndings = "";
-		finalMessage = "";
+		resetInternalState();
 		board = new MinesweeperBoard(size, minePercentage, null);
 	}
+
+	const resetInternalState = () => {
+		selectedCoordinate = new Coordinate(-1, -1, -2);
+		mobileControlPermitted = true;
+		boardStyleStateForGameEndings = "";
+		finalMessage = "";
+	};
 
 	let timer = 0;
 
@@ -57,8 +65,9 @@
 	};
 
 	let popSoundsTimeoutBuffer = new Array<NodeJS.Timeout>();
-	const startExplodingMines = (startCoordinate: Coordinate) => {
+	const lose = (startCoordinate: Coordinate) => {
 		stopTimer();
+		mobileControlPermitted = false;
 		finalMessage = "You lost!";
 		const MINE_EXPLOSION_STEP = 100;
 		const FIRST_MINE_EXPLOSION_TIME = 1000;
@@ -80,6 +89,7 @@
 
 	const win = () => {
 		stopTimer();
+		mobileControlPermitted = false;
 		finalMessage = "You win!";
 		forceSound("/sounds/win.mp3");
 		boardStyleStateForGameEndings =
@@ -96,9 +106,10 @@
 
 	const leftClickHandler = (c: Coordinate) => {
 		if (DUMP_BOARD_TO_CONSOLE) console.log(board.toString());
+		if (!c.isHidden) return;
 		let gameContinues = board.leftClick(c);
 		board = board;
-		if (!gameContinues) startExplodingMines(c);
+		if (!gameContinues) lose(c);
 	};
 
 	let timerInterval: NodeJS.Timeout;
@@ -118,13 +129,15 @@
 
 	const restartCallback = () => {
 		board = new MinesweeperBoard(size, minePercentage, null);
-		boardStyleStateForGameEndings = "";
-		finalMessage = "";
+		resetInternalState();
 		resetTimer();
 		popSoundsTimeoutBuffer.forEach((i) => {
 			clearInterval(i);
 		});
 	};
+
+	let selectedCoordinate = new Coordinate(-1, -1, -2);
+	let mobileControlPermitted = true;
 </script>
 
 <div class="w-screen h-screen flex flex-col items-center justify-center">
@@ -135,7 +148,6 @@
 		bind:settingsVisible
 		bind:board
 		{restartCallback} />
-
 	<Settings
 		bind:visible={settingsVisible}
 		bind:boardSize={size}
@@ -150,12 +162,15 @@
 			{#each Array(size) as _, j}
 				{#if board.uninitialized}
 					<Area
+						bind:selectedCoordinate
+						bypassMobile
 						onLeftClick={initialClick}
 						onRightClick={initialClick}
 						coordinate={new Coordinate(i, j, -2)}
 						size={vh} />
 				{:else}
 					<Area
+						bind:selectedCoordinate
 						onLeftClick={leftClickHandler}
 						onRightClick={rightClickHandler}
 						coordinate={board.coordinateAt(i, j)}
@@ -164,10 +179,24 @@
 			{/each}
 		{/each}
 	</div>
-	<div class="h-4" />
-	<div
-		class="h-0 uppercase text-neutral-500"
-		style="font-family: 'Press Start 2P';">
-		{finalMessage}
+	<div class="flex flex-col gap-4" style={`width:${size * vh}vh`}>
+		{#if isMobile() && mobileControlPermitted}
+			<MobileMenu
+				coordinate={selectedCoordinate}
+				onReveal={(c) => {
+					if (c.value == -2) {
+						return initialClick(c);
+					}
+					leftClickHandler(c);
+				}}
+				onFlag={(c) => {
+					rightClickHandler(c);
+				}} />
+		{/if}
+		<div
+			class="h-0 pt-3 uppercase text-neutral-500 game-font text-center w-full"
+			style="font-size: 1.8vh;">
+			{finalMessage}
+		</div>
 	</div>
 </div>

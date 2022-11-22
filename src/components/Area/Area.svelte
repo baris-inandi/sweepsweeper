@@ -1,10 +1,14 @@
 <script lang="ts">
 	import type Coordinate from "$lib/Coordinate/Coordinate";
+	import isMobile from "$lib/utils/isMobile";
 	import Flag from "./Flag/Flag.svelte";
 	export let size: number;
+	export let bypassMobile: boolean = false;
 	export let coordinate: Coordinate;
+	export let selectedCoordinate: Coordinate;
 	export let onLeftClick: (c: Coordinate) => void;
 	export let onRightClick: (c: Coordinate) => void;
+
 	let isExploded = false;
 </script>
 
@@ -18,17 +22,23 @@
 			onRightClick(coordinate);
 		}}
 		on:click|preventDefault={(e) => {
-			if (coordinate.flagged) {
-				onRightClick(coordinate);
-				return;
-			}
-			if (coordinate.isMine()) {
-				isExploded = true;
-			}
+			if (!bypassMobile) selectedCoordinate = coordinate;
+			if (isMobile() && !bypassMobile) return;
+			if (e.shiftKey || e.ctrlKey || e.metaKey || e.altKey)
+				return onRightClick(coordinate);
+			if (coordinate.flagged) return onRightClick(coordinate);
+			if (coordinate.isMine()) isExploded = true;
 			onLeftClick(coordinate);
 		}}
 		style={`height:${size}vh;width:${size}vh`}
 		class={`cursor-default flex items-center justify-center
+		${
+			selectedCoordinate.ID() == coordinate.ID() &&
+			isMobile() &&
+			coordinate.isHidden
+				? "z-30 border-2 border-lime-700 shadow-lg rounded-sm shadow-lime-300"
+				: ""
+		}
 		${
 			isExploded
 				? "bg-orange-200"
@@ -43,19 +53,20 @@
 		{:else if !coordinate.isHidden}
 			{#if coordinate.value > 0}
 				<p
-					class={[
-						"text-sky-600",
-						"text-lime-600",
-						"text-orange-600",
-						"text-fuchsia-600",
-						"text-yellow-500",
-						"text-pink-500",
-						"text-neutral-600",
-						"text-black"
-					][coordinate.value - 1]}
+					class={"game-font " +
+						[
+							"text-sky-600",
+							"text-lime-600",
+							"text-orange-600",
+							"text-fuchsia-600",
+							"text-yellow-500",
+							"text-pink-500",
+							"text-neutral-600",
+							"text-black"
+						][coordinate.value - 1]}
 					style={`filter: contrast(0.4) brightness(1.1); font-size: ${
 						size < 4 ? size / 2 : size / 3
-					}vh; font-family: 'Press Start 2P'`}>
+					}vh;`}>
 					{coordinate.value}
 				</p>
 			{:else if coordinate.isMine()}

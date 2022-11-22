@@ -2,5 +2,10 @@
     "cSpell.words": [
         "fastify",
         "socketio"
+    ],
+    "deno.unstable": true,
+    "deno.codeLens.references": true,
+    "deno.enablePaths": [
+        "server/"
     ]
 }

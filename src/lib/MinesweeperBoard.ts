@@ -139,6 +139,9 @@ export default class MinesweeperBoard {
 
 	public leftClick(c: Coordinate) {
 		// return true if game continues, false if mine explodes
+		if (c.x < 0 || c.y < 0 || c.x >= this.boardSize || c.y >= this.boardSize) {
+			return true;
+		}
 		if (c.flagged) {
 			return true;
 		}
