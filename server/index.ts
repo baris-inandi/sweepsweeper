@@ -3,17 +3,18 @@ import { Server } from "https://deno.land/x/socket_io@0.1.1/mod.ts";
 
 const io = new Server({
 	cors: {
-		origin: ["localhost:5173", "localhost:3000"],
+		origin: true, // TODO: this might be risky
 		methods: ["GET", "POST"]
-	}
+	},
+	pingInterval: 1000,
+	pingTimeout: 4000
 });
 
-io.on("connection", (socket) => {
-	console.log(`socket ${socket.id} connected`);
-
-	socket.emit("hellox", "world");
+io.of(/^\/online-vs-\d+$/).on("connection", (socket) => {
+	console.log(`socket ${socket.id} connected on a room`);
 
 	socket.on("disconnect", (reason) => {
+		socket.emit("message", reason);
 		console.log(`socket ${socket.id} disconnected due to ${reason}`);
 	});
 });

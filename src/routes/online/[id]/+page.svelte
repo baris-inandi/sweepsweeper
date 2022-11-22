@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { page } from "$app/stores";
 	import { io } from "socket.io-client";
-	const socket = io("localhost:3000");
+	const socket = io("localhost:3000/online-vs-1234");
 
 	let msg = "";
 
