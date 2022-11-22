@@ -128,7 +128,13 @@
 </script>
 
 <div class="w-screen h-screen flex flex-col items-center justify-center">
-	<Panel bind:vh bind:size bind:timer bind:settingsVisible bind:board {restartCallback} />
+	<Panel
+		bind:vh
+		bind:size
+		bind:timer
+		bind:settingsVisible
+		bind:board
+		{restartCallback} />
 
 	<Settings
 		bind:visible={settingsVisible}
@@ -136,12 +142,10 @@
 		bind:minePercentage
 		bind:isUnmuted
 		{defaultBoardSize}
-		{defaultMinePercentage}
-	/>
+		{defaultMinePercentage} />
 	<div
 		style={`grid-template-columns: repeat(${size}, minmax(0, 1fr)); ${boardStyleStateForGameEndings}`}
-		class="grid w-fit border-lime-500"
-	>
+		class="grid w-fit border-lime-500">
 		{#each Array(size) as _, i}
 			{#each Array(size) as _, j}
 				{#if board.uninitialized}
@@ -149,21 +153,21 @@
 						onLeftClick={initialClick}
 						onRightClick={initialClick}
 						coordinate={new Coordinate(i, j, -2)}
-						size={vh}
-					/>
+						size={vh} />
 				{:else}
 					<Area
 						onLeftClick={leftClickHandler}
 						onRightClick={rightClickHandler}
 						coordinate={board.coordinateAt(i, j)}
-						size={vh}
-					/>
+						size={vh} />
 				{/if}
 			{/each}
 		{/each}
 	</div>
 	<div class="h-4" />
-	<div class="h-0 uppercase text-neutral-500" style="font-family: 'Press Start 2P';">
+	<div
+		class="h-0 uppercase text-neutral-500"
+		style="font-family: 'Press Start 2P';">
 		{finalMessage}
 	</div>
 </div>

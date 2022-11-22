@@ -8,8 +8,7 @@
 	style={`
 border-left: ${size / (multiplier * 8)}vh solid ${flagColor};
 padding-bottom: ${size / (multiplier * 2)}vh;
-`}
->
+`}>
 	<div
 		style={`
     width: 0; 
@@ -18,6 +17,5 @@ padding-bottom: ${size / (multiplier * 2)}vh;
     border-bottom: ${size / (multiplier * 3)}vh solid transparent;
     border-left: ${size / multiplier}vh solid ${flagColor};
     transform: translate(-1px, 1px);
-    `}
-	/>
+    `} />
 </div>

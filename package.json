@@ -2,6 +2,7 @@
 	"name": "minesweeper",
 	"version": "0.0.1",
 	"private": true,
+	"author": "baris-inandi",
 	"scripts": {
 		"dev": "vite dev",
 		"host": "vite dev --host",

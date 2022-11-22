@@ -8,7 +8,10 @@
 	let isExploded = false;
 </script>
 
-<div class={`${(coordinate.x % 2 == 0) != (coordinate.y % 2 == 0) ? "brightness-95" : ""}`}>
+<div
+	class={`${
+		(coordinate.x % 2 == 0) != (coordinate.y % 2 == 0) ? "brightness-95" : ""
+	}`}>
 	<button
 		tabindex="-1"
 		on:contextmenu|preventDefault={(e) => {
@@ -34,8 +37,7 @@
 				? "bg-lime-300"
 				: "bg-orange-100"
 		}
-		`}
-	>
+		`}>
 		{#if coordinate.flagged}
 			<Flag {size} />
 		{:else if !coordinate.isHidden}
@@ -53,15 +55,15 @@
 					][coordinate.value - 1]}
 					style={`filter: contrast(0.4) brightness(1.1); font-size: ${
 						size < 4 ? size / 2 : size / 3
-					}vh; font-family: 'Press Start 2P'`}
-				>
+					}vh; font-family: 'Press Start 2P'`}>
 					{coordinate.value}
 				</p>
 			{:else if coordinate.isMine()}
 				<div
-					class={`rounded-full ${isExploded ? "bg-orange-600" : "bg-neutral-600"}`}
-					style={`height:${size / 2.5}vh;width:${size / 2.5}vh`}
-				/>
+					class={`rounded-full ${
+						isExploded ? "bg-orange-600" : "bg-neutral-600"
+					}`}
+					style={`height:${size / 2.5}vh;width:${size / 2.5}vh`} />
 			{/if}
 		{/if}
 	</button>

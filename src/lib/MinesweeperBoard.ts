@@ -11,7 +11,11 @@ export default class MinesweeperBoard {
 	public numFlags: number;
 	public epoch = Date.now();
 
-	constructor(boardSize: number, minePercentage: number, startPoint: Coordinate | null) {
+	constructor(
+		boardSize: number,
+		minePercentage: number,
+		startPoint: Coordinate | null
+	) {
 		this.mineRatio = minePercentage / 100;
 		const inner = new Array<Array<Coordinate>>();
 		for (let i = 0; i < boardSize; i++) {

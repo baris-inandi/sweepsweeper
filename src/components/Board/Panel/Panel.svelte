@@ -10,11 +10,15 @@
 	export let restartCallback: () => void;
 </script>
 
-<div class="my-4 flex justify-between items-center" style={`width:${vh * size}vh;`}>
+<div
+	class="my-4 flex justify-between items-center"
+	style={`width:${vh * size}vh;`}>
 	<div>
 		<div class="flex gap-4 items-center">
 			<Flag size={7} />
-			<span class="w-12 text-md text-neutral-600" style="font-family: 'Press Start 2P';">
+			<span
+				class="w-12 text-md text-neutral-600"
+				style="font-family: 'Press Start 2P';">
 				{board.numFlags}
 			</span>
 		</div>
@@ -36,7 +40,7 @@
 			on:click={() => {
 				settingsVisible = true;
 			}}
-			class="px-5 py-2 text-center bg-lime-600 rounded-md text-white font-medium">Settings</button
-		>
+			class="px-5 py-2 text-center bg-lime-600 rounded-md text-white font-medium"
+			>Settings</button>
 	</div>
 </div>

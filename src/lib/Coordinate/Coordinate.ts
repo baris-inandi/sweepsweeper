@@ -34,9 +34,9 @@ export default class Coordinate {
 	}
 
 	public toString(): string {
-		return `${this.flagged ? "F" : this.isHidden ? "H" : "S"}[(${this.x},${this.y})@${
-			this.value < 0 ? this.value : "+" + this.value
-		}]`;
+		return `${this.flagged ? "F" : this.isHidden ? "H" : "S"}[(${this.x},${
+			this.y
+		})@${this.value < 0 ? this.value : "+" + this.value}]`;
 	}
 
 	public toShortString(): string {
@@ -57,7 +57,11 @@ export default class Coordinate {
 		return `${this.x},${this.y}`;
 	}
 
-	public static neighborsOf(x: number, y: number, margin: number): Coordinate[] {
+	public static neighborsOf(
+		x: number,
+		y: number,
+		margin: number
+	): Coordinate[] {
 		const c = new Coordinate(x, y, -2);
 		return c.getNeighbors(margin);
 	}
