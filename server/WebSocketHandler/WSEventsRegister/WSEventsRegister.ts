@@ -1,4 +1,5 @@
 import { validateID, generateID } from "../../RoomID/RoomID.ts";
+import IUser from "./IUser.ts";
 import { Server } from "https://deno.land/x/socket_io@0.1.1/mod.ts";
 
 export default class WSEventsRegister {
@@ -6,18 +7,30 @@ export default class WSEventsRegister {
 		// send room id with query param `id`
 		// if no `id` param is provided, a new room will be created
 		// provide a uname param too
+		const userStore = new Map<string, IUser>();
 		io.of("/battle").on("connection", (socket) => {
-			const roomID = socket.handshake.query.get("id");
-			const uname = socket.handshake.query.get("uname");
-			socket.join(roomID && validateID(roomID) ? roomID : generateID());
+			const roomIDPre = socket.handshake.query.get("id");
+			const unamePre = socket.handshake.query.get("uname");
+			const roomID =
+				roomIDPre && validateID(roomIDPre) ? roomIDPre : generateID();
+			const uname = unamePre || "Anonymous";
+
+			userStore.set(socket.id, {
+				name: uname,
+				flagCount: 0
+			});
+			console.log(userStore);
+
+			socket.join(roomID);
 
 			// new player emit when they join the room
 			socket.broadcast.emit("new-player", uname || "Anonymous");
-			socket.on("new-player", (name: string) => {
-				socket.broadcast.emit("new-player", name);
+			userStore.forEach((v, _) => {
+				socket.emit("new-player", v.name);
 			});
 			socket.on("disconnect", (reason) => {
-				socket.broadcast.emit("disconnected-player", reason);
+				io.to(roomID).emit("disconnected-player", reason);
+				userStore.delete(socket.id);
 			});
 
 			// game start event

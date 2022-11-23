@@ -1,31 +1,32 @@
 <script lang="ts">
-	import { page } from "$app/stores";
-	import { io } from "socket.io-client";
+	import { io, Socket } from "socket.io-client";
+	// TODO: bu aslında çalışıyor, join e iki kez basılmaması gerek normal şartlarda, iki kere basarsan initial user listesi bidaha feed ediliyo array e
 
-	const socket = io(`localhost:3000/battle?id=12341234`);
-
+	let socket: Socket | undefined;
+	let id = 12341234;
 	let players = new Array<string>("<users>");
 
-	socket.on("game-start", (data) => {
-		console.log("> game-start", data);
-	});
+	const onClick = () => {
+		socket = io(`localhost:3000/battle?id=${id}&name=${uname}`);
 
-	socket.on("new-player", (data) => {
-		console.log("> new-player", data);
-		players.push(data);
-		players = players;
-	});
+		socket?.on("game-start", (data) => {
+			console.log("> game-start", data);
+		});
+		socket?.on("new-player", (data) => {
+			console.log("> new-player", data);
+			players.push(data);
+			players = players;
+		});
+	};
 
 	let uname = "enter name";
 </script>
 
 <input type="text" bind:value={uname} />
-<button
-	on:click={() => {
-		socket.emit("new-player", uname);
-	}}
-	>join
-</button><br />
+<button on:click={onClick}>join </button><br />
 {#each players as player}
-	{player}
+	<b>
+		{player}
+	</b>
+	<br />
 {/each}
