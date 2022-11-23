@@ -1,5 +1,5 @@
 <script>
-	import Game from "../components/Game.svelte";
+	import GameWindow from "../components/GameWindow.svelte";
 </script>
 
-<Game />
+<GameWindow />

@@ -2,7 +2,8 @@
 	import type Coordinate from "$lib/Coordinate/Coordinate";
 	import isMobile from "$lib/utils/isMobile";
 	import Flag from "./Flag/Flag.svelte";
-	export let size: number;
+	export let vv: number;
+	export let vt: string;
 	export let bypassMobile: boolean = false;
 	export let coordinate: Coordinate;
 	export let selectedCoordinate: Coordinate;
@@ -30,7 +31,7 @@
 			if (coordinate.isMine()) isExploded = true;
 			onLeftClick(coordinate);
 		}}
-		style={`height:${size}vh;width:${size}vh`}
+		style={`height:${vv}${vt};width:${vv}${vt}`}
 		class={`cursor-default flex items-center justify-center
 		${
 			selectedCoordinate.ID() == coordinate.ID() &&
@@ -49,7 +50,7 @@
 		}
 		`}>
 		{#if coordinate.flagged}
-			<Flag {size} />
+			<Flag {vv} {vt} />
 		{:else if !coordinate.isHidden}
 			{#if coordinate.value > 0}
 				<p
@@ -65,8 +66,8 @@
 							"text-black"
 						][coordinate.value - 1]}
 					style={`filter: contrast(0.4) brightness(1.1); font-size: ${
-						size < 4 ? size / 2 : size / 3
-					}vh;`}>
+						vv < 4 ? vv / 2 : vv / 3
+					}${vt};`}>
 					{coordinate.value}
 				</p>
 			{:else if coordinate.isMine()}
@@ -74,7 +75,7 @@
 					class={`rounded-full ${
 						isExploded ? "bg-orange-600" : "bg-neutral-600"
 					}`}
-					style={`height:${size / 2.5}vh;width:${size / 2.5}vh`} />
+					style={`height:${vv / 2.5}${vt};width:${vv / 2.5}${vt}`} />
 			{/if}
 		{/if}
 	</button>

@@ -1,21 +1,22 @@
 <script lang="ts">
-	export let size: number;
-	export let multiplier = size < 4 ? 2 : 3;
+	export let vv: number;
+  export let vt: string;
+	export let multiplier = vv < 4 ? 2 : 3;
 	export let flagColor = "#ff4747";
 </script>
 
 <div
 	style={`
-border-left: ${size / (multiplier * 8)}vh solid ${flagColor};
-padding-bottom: ${size / (multiplier * 2)}vh;
+border-left: ${vv / (multiplier * 8)}${vt} solid ${flagColor};
+padding-bottom: ${vv / (multiplier * 2)}${vt};
 `}>
 	<div
 		style={`
     width: 0; 
     height: 0; 
-    border-top: ${size / (multiplier * 3)}vh solid transparent;
-    border-bottom: ${size / (multiplier * 3)}vh solid transparent;
-    border-left: ${size / multiplier}vh solid ${flagColor};
+    border-top: ${vv / (multiplier * 3)}${vt} solid transparent;
+    border-bottom: ${vv / (multiplier * 3)}${vt} solid transparent;
+    border-left: ${vv / multiplier}${vt} solid ${flagColor};
     transform: translate(-1px, 1px);
     `} />
 </div>

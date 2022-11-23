@@ -1,4 +1,6 @@
 <script lang="ts">
+	export let vt: string;
+
 	const DEFAULT_BOARD_SIZE = 13;
 	const DEFAULT_MINE_PERCENTAGE = 15;
 
@@ -12,6 +14,7 @@
 	<div
 		class="z-20 outer bg-white w-screen h-screen flex items-center justify-center gap-8">
 		<Board
+			{vt}
 			size={boardSize[0]}
 			minePercentage={minePercentage[0]}
 			defaultBoardSize={DEFAULT_BOARD_SIZE}

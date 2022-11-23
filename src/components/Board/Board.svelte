@@ -12,6 +12,7 @@
 	export let defaultBoardSize: number;
 	export let defaultMinePercentage: number;
 	export let size: number;
+	export let vt: string;
 	export let minePercentage: number;
 	export let board = new MinesweeperBoard(size, minePercentage, null);
 
@@ -22,7 +23,8 @@
 	if (DUMP_BOARD_TO_CONSOLE) console.log(board.toString());
 
 	$: finalMessage = "";
-	$: vh = 55 / size;
+	let windowInnerWidth = 0;
+	$: vv = (vt === "vw" ? (windowInnerWidth < 500 ? 85 : 70) : 60) / size;
 	$: {
 		size;
 		minePercentage;
@@ -140,9 +142,11 @@
 	let mobileControlPermitted = true;
 </script>
 
+<svelte:window bind:innerWidth={windowInnerWidth} />
 <div class="w-screen h-screen flex flex-col items-center justify-center">
 	<Panel
-		bind:vh
+		{vt}
+		bind:vv
 		bind:size
 		bind:timer
 		bind:settingsVisible
@@ -162,24 +166,26 @@
 			{#each Array(size) as _, j}
 				{#if board.uninitialized}
 					<Area
+						{vt}
 						bind:selectedCoordinate
 						bypassMobile
 						onLeftClick={initialClick}
 						onRightClick={initialClick}
 						coordinate={new Coordinate(i, j, -2)}
-						size={vh} />
+						{vv} />
 				{:else}
 					<Area
+						{vt}
 						bind:selectedCoordinate
 						onLeftClick={leftClickHandler}
 						onRightClick={rightClickHandler}
 						coordinate={board.coordinateAt(i, j)}
-						size={vh} />
+						{vv} />
 				{/if}
 			{/each}
 		{/each}
 	</div>
-	<div class="flex flex-col gap-4" style={`width:${size * vh}vh`}>
+	<div class="flex flex-col gap-4" style={`width:${size * vv}${vt}`}>
 		{#if isMobile() && mobileControlPermitted}
 			<MobileMenu
 				coordinate={selectedCoordinate}
@@ -195,7 +201,7 @@
 		{/if}
 		<div
 			class="h-0 pt-3 uppercase text-neutral-500 game-font text-center w-full"
-			style="font-size: 1.8vh;">
+			style={`font-size: 1.8${vt};`}>
 			{finalMessage}
 		</div>
 	</div>
