@@ -7,11 +7,10 @@
 
 	socket.connect();
 	socket.on("connect", () => {
-		console.log("connected");
+		console.log("emitting");
+		socket.emit(
+			"sendMinesweeperBoard",
+			new MinesweeperBoard(20, 10, new Coordinate(2, 4, -2))
+		);
 	});
-
-	socket.emit(
-		"sendMinesweeperBoard",
-		new MinesweeperBoard(20, 10, new Coordinate(2, 4, -2))
-	);
 </script>
