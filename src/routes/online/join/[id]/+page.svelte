@@ -12,8 +12,8 @@
 		socket?.on("game-start", (data) => {
 			console.log("> game-start", data);
 		});
-		socket?.on("new-player", (data) => {
-			console.log("> new-player", data);
+		socket?.on("playerlist-update", (data) => {
+			console.log(data);
 			players.push(data);
 			players = players;
 		});
