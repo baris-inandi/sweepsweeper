@@ -2,19 +2,10 @@ import { validateID, generateID } from "../../RoomID/RoomID.ts";
 import { Server } from "https://deno.land/x/socket_io@0.1.1/mod.ts";
 import UserStore from "./UserStore/UserStore.ts";
 
-export default class WSEventsRegister {
+export default class WSEventsRegisterPlayerJoins {
 	// Map[roomID][userID] = <IUser>
 	private userStore = new UserStore();
 	public io: Server;
-
-	public updatePlayerlist(socket: any, roomID: string) {
-		this.userStore.emitForRoom(
-			roomID,
-			"playerlist-update",
-			this.userStore.getRoom(roomID)
-		);
-		socket.emit("playerlist-update", this.userStore.getRoom(roomID));
-	}
 
 	constructor(_io: Server) {
 		// send room id with query param `id`
@@ -32,12 +23,20 @@ export default class WSEventsRegister {
 			// send all sockets a playerlist update
 			this.userStore.registerUser(roomID, socket, uname);
 			console.log("new mf just joined to room", roomID);
-			this.updatePlayerlist(socket, roomID);
+			this.userStore.emitForRoom(
+				roomID,
+				"playerlist-update",
+				this.userStore.getRoom(roomID)
+			);
 
 			// new player emit when they join the room
 			socket.on("disconnect", (_) => {
 				this.userStore.removeUser(roomID, socket.id);
-				this.updatePlayerlist(socket, roomID);
+				this.userStore.emitForRoom(
+					roomID,
+					"playerlist-update",
+					this.userStore.getRoom(roomID)
+				);
 			});
 
 			// game start event

@@ -1,6 +1,6 @@
 import { Server } from "https://deno.land/x/socket_io@0.1.1/mod.ts";
 import { serve } from "https://deno.land/std@0.150.0/http/server.ts";
-import WSEventsHandler from "./WSEventsRegister/WSEventsRegister.ts";
+import WSEventsRegisterPlayerJoins from "./WSEventsRegisterPlayerJoins/WSEventsRegisterPlayerJoins.ts";
 
 const PORT = 3000;
 
@@ -14,7 +14,7 @@ export default class WebSocketHandler {
 		pingTimeout: 4000
 	});
 
-	private events = new WSEventsHandler(this.io);
+	private events = new WSEventsRegisterPlayerJoins(this.io);
 
 	public async serve() {
 		await serve(this.io.handler(), {
