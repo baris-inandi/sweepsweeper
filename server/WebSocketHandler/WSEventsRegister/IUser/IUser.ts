@@ -1,4 +1,5 @@
 export default interface IUser {
-    name: string;
-    flagCount: number;
+	name: string;
+	flagCount: number;
+	socket: any;
 }

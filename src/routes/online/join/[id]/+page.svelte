@@ -7,7 +7,7 @@
 	let players = new Array<string>("<users>");
 
 	const onClick = () => {
-		socket = io(`localhost:3000/battle?id=${id}&name=${uname}`);
+		socket = io(`localhost:3000/ms-battle?join=${id}&name=${uname}`);
 
 		socket?.on("game-start", (data) => {
 			console.log("> game-start", data);
@@ -16,6 +16,9 @@
 			console.log(data);
 			players.push(data);
 			players = players;
+		});
+		socket?.on("console", (data) => {
+			console.log(data);
 		});
 	};
 

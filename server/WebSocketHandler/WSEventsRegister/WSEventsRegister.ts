@@ -5,34 +5,44 @@ import UserStore from "./UserStore/UserStore.ts";
 export default class WSEventsRegister {
 	// Map[roomID][userID] = <IUser>
 	private userStore = new UserStore();
+	public io: Server;
 
-	constructor(private io: Server) {
+	public updatePlayerlist(socket: any, roomID: string) {
+		this.userStore.emitForRoom(
+			roomID,
+			"playerlist-update",
+			this.userStore.getRoom(roomID)
+		);
+		socket.emit("playerlist-update", this.userStore.getRoom(roomID));
+	}
+
+	constructor(_io: Server) {
 		// send room id with query param `id`
 		// if no `id` param is provided, a new room will be created
 		// provide a uname param too
-		io.of("/battle").on("connection", (socket) => {
-			const roomIDPre = socket.handshake.query.get("id");
-			const unamePre = socket.handshake.query.get("uname");
+		this.io = _io;
+		this.io.of("/ms-battle").on("connection", (socket) => {
+			const roomIDPre = socket.handshake.query.get("join");
+			const unamePre = socket.handshake.query.get("name");
 			const roomID =
 				roomIDPre && validateID(roomIDPre) ? roomIDPre : generateID();
 			const uname = unamePre || "Anonymous";
 
-			this.userStore.registerUser(roomID, socket.id, uname);
-			console.log(this.userStore);
-
-			socket.join(roomID);
+			// create user
+			// send all sockets a playerlist update
+			this.userStore.registerUser(roomID, socket, uname);
+			console.log("new mf just joined to room", roomID);
+			this.updatePlayerlist(socket, roomID);
 
 			// new player emit when they join the room
-			io.to(roomID).emit("new-player", uname || "Anonymous");
-			io.to(roomID).emit("playerlist-update", this.userStore.getRoom(roomID));
 			socket.on("disconnect", (_) => {
 				this.userStore.removeUser(roomID, socket.id);
-				io.to(roomID).emit("playerlist-update", this.userStore.getRoom(roomID));
+				this.updatePlayerlist(socket, roomID);
 			});
 
 			// game start event
 			socket.on("start-game", (gameOptions) => {
-				io.to(roomID).emit("start-game", gameOptions);
+				this.userStore.emitForRoom(roomID, "start-game", gameOptions);
 			});
 		});
 	}
