@@ -55,7 +55,7 @@ export default class MinesweeperBoard {
 	}
 
 	public coordinateAt(x: number, y: number) {
-		return this.inner[x][y] ? this.inner[x][y] : new Coordinate(x, y, -2);
+		return this.inner[x][y] ?? new Coordinate(x, y, -2);
 	}
 
 	public static calculateNumMines(size: number, ratio: number): number {
@@ -67,10 +67,11 @@ export default class MinesweeperBoard {
 	}
 
 	public populateWithRandomMines(startPoint: Coordinate) {
-		startPoint.getNeighbors(this.boardSize, true).forEach((n) => {
-			this.uniqueMemory.set(n.ID(), true);
-		});
 		this.uniqueMemory.set(startPoint.ID(), true);
+		startPoint.getDiamondNeighbors(this.boardSize).forEach((n) => {
+			this.uniqueMemory.set(n.ID(), true);
+			n.setValue(1);
+		});
 		Array(this.numMines())
 			.fill(undefined)
 			.forEach(() => {

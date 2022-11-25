@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type Coordinate from "$lib/Coordinate/Coordinate";
 	import isMobile from "$lib/utils/isMobile";
-	import { crossfade, fly, scale, slide } from "svelte/transition";
+	import { scale, slide } from "svelte/transition";
 	import Flag from "./Flag/Flag.svelte";
 	export let vv: number;
 	export let vt: string;
@@ -51,7 +51,7 @@
 		}
 		`}>
 		{#if coordinate.flagged}
-			<div transition:slide>
+			<div in:slide={{ duration: 150 }}>
 				<Flag {vv} {vt} />
 			</div>
 		{:else if !coordinate.isHidden}

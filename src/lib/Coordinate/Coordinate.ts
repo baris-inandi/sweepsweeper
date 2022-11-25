@@ -66,35 +66,56 @@ export default class Coordinate {
 		return c.getNeighbors(margin);
 	}
 
-	public getNeighbors(margin: number, large = false): Array<Coordinate> {
-		const out = [];
-		const start = large ? -2 : -1;
-		const end = large ? 2 : 1;
-		for (let i = start; i <= end; i++) {
-			for (let j = start; j <= end; j++) {
-				const x = this.x + i;
-				const y = this.y + j;
-				const c = new Coordinate(x, y, -2);
-				if (c.ID() === this.ID()) {
-					continue;
-				}
-				if (x < 0 || y < 0 || x >= margin || y >= margin) {
-					continue;
-				}
-				out.push(c);
-			}
-		}
-		return out;
+	public getNeighbors(margin: number): Array<Coordinate> {
+		return Coordinate.validNeighborsIn(
+			[
+				new Coordinate(this.x - 1, this.y - 1, -2),
+				new Coordinate(this.x, this.y - 1, -2),
+				new Coordinate(this.x + 1, this.y - 1, -2),
+				new Coordinate(this.x - 1, this.y, -2),
+				new Coordinate(this.x + 1, this.y, -2),
+				new Coordinate(this.x - 1, this.y + 1, -2),
+				new Coordinate(this.x, this.y + 1, -2),
+				new Coordinate(this.x + 1, this.y + 1, -2)
+			],
+			margin
+		);
+	}
+
+	public getDiamondNeighbors(margin: number): Array<Coordinate> {
+		return Coordinate.validNeighborsIn(
+			[
+				new Coordinate(this.x - 2, this.y, -2),
+				new Coordinate(this.x - 1, this.y - 1, -2),
+				new Coordinate(this.x - 1, this.y, -2),
+				new Coordinate(this.x - 1, this.y + 1, -2),
+				new Coordinate(this.x, this.y - 2, -2),
+				new Coordinate(this.x, this.y - 1, -2),
+				new Coordinate(this.x, this.y + 1, -2),
+				new Coordinate(this.x, this.y + 2, -2),
+				new Coordinate(this.x + 1, this.y - 1, -2),
+				new Coordinate(this.x + 1, this.y, -2),
+				new Coordinate(this.x + 1, this.y + 1, -2),
+				new Coordinate(this.x + 2, this.y, -2)
+			],
+			margin
+		);
 	}
 
 	public getQuadNeighbors(margin: number): Array<Coordinate> {
+		return Coordinate.validNeighborsIn(
+			[
+				new Coordinate(this.x + 1, this.y, -2),
+				new Coordinate(this.x - 1, this.y, -2),
+				new Coordinate(this.x, this.y + 1, -2),
+				new Coordinate(this.x, this.y - 1, -2)
+			],
+			margin
+		);
+	}
+
+	private static validNeighborsIn(tests: Array<Coordinate>, margin: number) {
 		const out = new Array<Coordinate>();
-		const tests = [
-			new Coordinate(this.x + 1, this.y, -2),
-			new Coordinate(this.x - 1, this.y, -2),
-			new Coordinate(this.x, this.y + 1, -2),
-			new Coordinate(this.x, this.y - 1, -2)
-		];
 		tests.forEach((x) => {
 			if (x.withinLimitsOfBoard(margin)) out.push(x);
 		});
