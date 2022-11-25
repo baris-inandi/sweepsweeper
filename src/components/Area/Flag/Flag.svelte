@@ -17,6 +17,6 @@ padding-bottom: ${vv / (multiplier * 2)}${vt};
     border-top: ${vv / (multiplier * 3)}${vt} solid transparent;
     border-bottom: ${vv / (multiplier * 3)}${vt} solid transparent;
     border-left: ${vv / multiplier}${vt} solid ${flagColor};
-    transform: translate(-1px, 1px);
-    `} />
+    transform: translate(-1px, 1px); 
+    `} /><!-- TODO: write the transform in terms of vv and vt -->
 </div>
