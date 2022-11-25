@@ -16,7 +16,7 @@
 	style={`width:${vv * size}${vt};font-size:max(1.6${vt}, 10px);`}>
 	<div>
 		<div class="flex gap-4 items-center">
-			<Flag {vt} vv={5} />
+			<Flag {vt} vv={7} />
 			<span class="w-12 text-neutral-600 game-font">
 				{board.numFlags}
 			</span>

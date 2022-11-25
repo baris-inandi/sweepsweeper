@@ -2,7 +2,7 @@
 	export let vt: string;
 
 	const DEFAULT_BOARD_SIZE = 13;
-	const DEFAULT_MINE_PERCENTAGE = 15;
+	const DEFAULT_MINE_PERCENTAGE = 12;
 
 	import Board from "./Board/Board.svelte";
 

@@ -68,7 +68,7 @@
 							"text-neutral-600",
 							"text-black"
 						][coordinate.value - 1]}
-					style={`filter: contrast(0.4) brightness(1.1); font-size: ${
+					style={`filter: contrast(0.4) brightness(1.15); font-size: ${
 						vv < 4 ? vv / 2 : vv / 3
 					}${vt};`}>
 					{coordinate.value}

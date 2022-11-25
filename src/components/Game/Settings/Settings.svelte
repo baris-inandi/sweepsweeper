@@ -2,6 +2,11 @@
 	import Slider from "@bulatdashiev/svelte-slider/src/Slider.svelte";
 	import Toggle from "svelte-toggle";
 
+	const MIN_BOARD_SIZE = 8;
+	const MAX_BOARD_SIZE = 36;
+	const MIN_MINE_PERCENTAGE = 10;
+	const MAX_MINE_PERCENTAGE = 16;
+
 	export let visible: boolean;
 	export let boardSize: number;
 	export let minePercentage: number;
@@ -25,23 +30,27 @@
 		<div class="flex flex-col gap-4">
 			<div>
 				<p>Board size</p>
-				<div class="flex items-center justify-center gap-4">
-					<Slider bind:value={formattedBoardSize} min={8} max={36} step={1} />
+				<div class="flex items-center justify-center gap-6">
+					<Slider
+						bind:value={formattedBoardSize}
+						min={MIN_BOARD_SIZE}
+						max={MAX_BOARD_SIZE}
+						step={1} />
 					<span class="w-16 text-right">
-						{boardSize.toString()}
+						{boardSize + "x" + boardSize}
 					</span>
 				</div>
 			</div>
 			<div>
 				<p>Amount of Mines</p>
-				<div class="flex items-center justify-center gap-4">
+				<div class="flex items-center justify-center gap-6">
 					<Slider
 						bind:value={formattedMinePercentage}
-						min={10}
-						max={20}
-						step={1} />
+						min={MIN_MINE_PERCENTAGE}
+						max={MAX_MINE_PERCENTAGE}
+						step={0.1} />
 					<span class="w-16 text-right">
-						{minePercentage.toString()}%
+						{minePercentage.toFixed(1)}%
 					</span>
 				</div>
 			</div>
@@ -60,6 +69,7 @@
 		<div class="flex gap-3 flex-col pt-8">
 			<button
 				on:click={() => {
+					visible = false;
 					boardSize = defaultBoardSize;
 					minePercentage = defaultMinePercentage;
 					isUnmuted = true;

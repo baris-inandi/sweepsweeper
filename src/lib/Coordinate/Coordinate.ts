@@ -1,17 +1,20 @@
+export type CoordinateValue = -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+
 export default class Coordinate {
 	public x: number;
 	public y: number;
 	public isHidden = true;
-	public value: number; // -2 for unset, -1 for mine, 0 for empty, 1+ for number value
 	public flagged = false;
+	public value: CoordinateValue;
+	// -2 for unset, -1 for mine, 0 for empty, 1+ for number value
 
-	constructor(x: number, y: number, value: number) {
+	constructor(x: number, y: number, value: CoordinateValue) {
 		this.x = x;
 		this.y = y;
 		this.value = value;
 	}
 
-	public setValue(value: number) {
+	public setValue(value: CoordinateValue) {
 		this.value = value;
 		return value;
 	}
