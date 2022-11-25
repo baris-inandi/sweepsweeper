@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type Coordinate from "$lib/Coordinate/Coordinate";
 	import isMobile from "$lib/utils/isMobile";
+	import { crossfade, fly, scale, slide } from "svelte/transition";
 	import Flag from "./Flag/Flag.svelte";
 	export let vv: number;
 	export let vt: string;
@@ -50,7 +51,9 @@
 		}
 		`}>
 		{#if coordinate.flagged}
-			<Flag {vv} {vt} />
+			<div transition:slide>
+				<Flag {vv} {vt} />
+			</div>
 		{:else if !coordinate.isHidden}
 			{#if coordinate.value > 0}
 				<p
@@ -72,6 +75,7 @@
 				</p>
 			{:else if coordinate.isMine()}
 				<div
+					in:scale={{ duration: 300 }}
 					class={`rounded-full ${
 						isExploded ? "bg-orange-600" : "bg-neutral-600"
 					}`}
