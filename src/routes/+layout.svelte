@@ -3,7 +3,9 @@
 	import "/src/tailwind.css";
 </script>
 
-<slot />
+<div class="select-none antialiased">
+	<slot />
+</div>
 
 <svelte:head>
 	<title>Minesweeper</title>

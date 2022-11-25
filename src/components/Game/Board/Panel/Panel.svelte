@@ -17,12 +17,12 @@
 	<div>
 		<div class="flex gap-4 items-center">
 			<Flag {vt} vv={7} />
-			<span class="w-12 text-neutral-600 game-font">
+			<span class="w-12 text-neutral-600 font-game">
 				{board.numFlags}
 			</span>
 		</div>
 	</div>
-	<span class="text-neutral-600 game-font">
+	<span class="text-neutral-600 font-game">
 		{(() => {
 			var date = new Date(0);
 			date.setSeconds(timer);

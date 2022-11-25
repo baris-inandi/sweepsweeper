@@ -1,1 +1,5 @@
-<div class="h-screen w-screen bg-lime-300">Hello</div>
+<script>
+	import Join from "../../components/Battle/Join/Join.svelte";
+</script>
+
+<Join />

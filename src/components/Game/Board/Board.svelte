@@ -208,7 +208,7 @@
 			</div>
 		{/if}
 		<div
-			class="h-0 pt-3 uppercase text-neutral-500 game-font text-center w-full"
+			class="h-0 pt-3 uppercase text-neutral-500 font-game text-center w-full"
 			style={`font-size: 1.8${vt};`}>
 			{finalMessage}
 		</div>

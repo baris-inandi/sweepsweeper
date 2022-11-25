@@ -1,6 +1,7 @@
 import type { Socket } from "socket.io";
 import type IUser from "../IUser/IUser";
 import type { IUserProps } from "../IUser/IUser";
+import generateRandomColor from "./utils/generateRandomColor";
 
 export type Room = Map<string, IUser>;
 
@@ -16,7 +17,8 @@ export default class UserStore {
 		this.innerStore.get(roomID)?.set(socket.id, {
 			props: {
 				name,
-				flagCount: 0
+				flagCount: 0,
+				color: generateRandomColor()
 			},
 			socket
 		});

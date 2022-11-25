@@ -21,6 +21,7 @@
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-cloudflare": "1.0.0-next.40",
 		"@sveltejs/kit": "next",
+		"@types/fscreen": "^1.0.1",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"autoprefixer": "^10.4.13",
@@ -43,6 +44,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"fscreen": "^1.2.0",
 		"socket.io-client": "^4.5.3"
 	},
 	"engines": {

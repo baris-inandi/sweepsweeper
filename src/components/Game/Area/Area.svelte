@@ -57,7 +57,7 @@
 		{:else if !coordinate.isHidden}
 			{#if coordinate.value > 0}
 				<p
-					class={"game-font " +
+					class={"font-game " +
 						[
 							"text-sky-600",
 							"text-lime-600",

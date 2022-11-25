@@ -5,6 +5,7 @@ specifiers:
   '@sveltejs/adapter-auto': next
   '@sveltejs/adapter-cloudflare': 1.0.0-next.40
   '@sveltejs/kit': next
+  '@types/fscreen': ^1.0.1
   '@typescript-eslint/eslint-plugin': ^5.27.0
   '@typescript-eslint/parser': ^5.27.0
   autoprefixer: ^10.4.13
@@ -12,6 +13,7 @@ specifiers:
   eslint: ^8.16.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-svelte3: ^4.0.0
+  fscreen: ^1.2.0
   postcss: ^8.4.19
   prettier: ^2.6.2
   prettier-plugin-svelte: ^2.7.0
@@ -27,6 +29,7 @@ specifiers:
   vite: ^3.1.0
 
 dependencies:
+  fscreen: 1.2.0
   socket.io-client: 4.5.3
 
 devDependencies:
@@ -34,6 +37,7 @@ devDependencies:
   '@sveltejs/adapter-auto': 1.0.0-next.89
   '@sveltejs/adapter-cloudflare': 1.0.0-next.40
   '@sveltejs/kit': 1.0.0-next.561_svelte@3.53.1+vite@3.2.4
+  '@types/fscreen': 1.0.1
   '@typescript-eslint/eslint-plugin': 5.43.0_wze2rj5tow7zwqpgbdx2buoy3m
   '@typescript-eslint/parser': 5.43.0_e3uo4sehh4zr4i6m57mkkxxv7y
   autoprefixer: 10.4.13_postcss@8.4.19
@@ -284,6 +288,10 @@ packages:
 
   /@types/cookie/0.5.1:
     resolution: {integrity: sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==}
+    dev: true
+
+  /@types/fscreen/1.0.1:
+    resolution: {integrity: sha512-hV2d0BreihMGtrg+EdAFOIl/O2EL5vhAheHJUztGE/lPFZIN8ZCpGFL8hCbtyi1CfhKjDRCf47sHjP+FwJ4q0Q==}
     dev: true
 
   /@types/json-schema/7.0.11:
@@ -1768,6 +1776,10 @@ packages:
   /fs.realpath/1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
     dev: true
+
+  /fscreen/1.2.0:
+    resolution: {integrity: sha512-hlq4+BU0hlPmwsFjwGGzZ+OZ9N/wq9Ljg/sq3pX+2CD7hrJsX9tJgWWK/wiNTFM212CLHWhicOoqwXyZGGetJg==}
+    dev: false
 
   /fsevents/2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}

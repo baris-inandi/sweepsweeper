@@ -11,7 +11,7 @@
 </script>
 
 <main
-	class="select-none antialiased z-20 outer bg-white w-full h-full flex items-center justify-center gap-8">
+	class="z-20 bg-white w-full h-full flex items-center justify-center gap-8">
 	<Board
 		{vt}
 		size={boardSize[0]}
