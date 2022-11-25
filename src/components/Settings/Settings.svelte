@@ -29,8 +29,8 @@
 						<div class="flex items-center justify-center gap-4">
 							<Slider
 								bind:value={formattedBoardSize}
-								min={9}
-								max={32}
+								min={8}
+								max={40}
 								step={1} />
 							<span class="w-16 text-right">
 								{boardSize.toString()}
