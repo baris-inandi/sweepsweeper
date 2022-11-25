@@ -1,3 +1,0 @@
-#!/bin/bash
-deno cache server.ts
-deno run --allow-all --watch server.ts $@
