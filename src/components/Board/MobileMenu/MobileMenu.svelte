@@ -20,13 +20,13 @@
 			on:click={() => {
 				act(false);
 			}}
-			class="font-medium border border-lime-300 text-lime-700 bg-lime-100 active:bg-lime-200 w-full px-2 py-3 rounded-bl-md"
+			class="font-medium border border-cyan-500 text-white bg-cyan-400 active:bg-cyan-500 w-full px-2 py-3 rounded-bl-md"
 			>Reveal</button>
 		<button
 			on:click={() => {
 				act(true);
 			}}
-			class="font-medium border border-orange-200 text-orange-700 bg-orange-100 active:bg-orange-200 w-full px-2 py-3 rounded-br-md"
+			class="font-medium border border-orange-500 text-white bg-orange-400 active:bg-orange-500 w-full px-2 py-3 rounded-br-md"
 			>Flag</button>
 	</div>
 </div>
