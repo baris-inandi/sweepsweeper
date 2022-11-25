@@ -30,7 +30,7 @@
 			if (gameCode.length == 8 && uname.length > 2 && uname.length < 16)
 				goto(`/battle/join/${gameCode}?name=${uname}`);
 		}}>
-		<div class="flex flex-col border-4 border-violet-900">
+		<div class="flex flex-col border-4 border-black">
 			<div
 				class="shadow-2xl font-game shadow-violet-900 bg-violet-600 w-fit pt-12 pb-10 px-20 text-center">
 				<BattleLogo />
@@ -58,7 +58,11 @@
 				(gameCode.length == 8 || gameCode.length == 0) &&
 				((uname.length > 2 && uname.length < 16) || uname.length == 0)
 					? ""
-					: "pointer-events-none saturate-50"
+					: "saturate-50"
+			} ${
+				gameCode.length == 8 && uname.length > 2 && uname.length < 16
+					? ""
+					: "pointer-events-none"
 			}
 			`}>
 				LET'S GO
