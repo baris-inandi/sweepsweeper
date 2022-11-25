@@ -1,4 +1,4 @@
-import { customAlphabet } from "https://deno.land/x/nanoid@v3.0.0/mod.ts";
+import { customAlphabet } from "nanoid";
 
 const ID_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const ID_LENGTH = 8;

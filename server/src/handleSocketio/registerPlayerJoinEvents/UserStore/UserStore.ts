@@ -1,12 +1,13 @@
-import { IUserProps } from "./../IUser/IUser.ts";
-import IUser from "../IUser/IUser.ts";
+import type { Socket } from "socket.io";
+import type IUser from "../IUser/IUser";
+import type { IUserProps } from "../IUser/IUser";
 
 export type Room = Map<string, IUser>;
 
 export default class UserStore {
 	innerStore = new Map<string, Room>();
 
-	public registerUser(roomID: string, socket: any, name: string) {
+	public registerUser(roomID: string, socket: Socket, name: string) {
 		if (!this.innerStore.has(roomID)) {
 			// if key of roomID does not exist, create it
 			console.log("Created room " + roomID);
@@ -37,7 +38,7 @@ export default class UserStore {
 	public getUsersInRoom(roomID: string) {
 		const room = this.innerStore.get(roomID);
 		const out = new Array<IUserProps>();
-		room?.forEach((v, k) => {
+		room?.forEach((v, _) => {
 			out.push(v.props);
 		});
 		return out;
