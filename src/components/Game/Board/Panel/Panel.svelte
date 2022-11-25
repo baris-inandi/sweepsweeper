@@ -39,7 +39,7 @@
 			on:click={() => {
 				settingsVisible = true;
 			}}
-			class="text-center bg-lime-600 rounded-md text-white font-medium"
+			class="text-center bg-lime-600 rounded-md text-white"
 			style={`padding: 1${vt} 2${vt};`}>Settings</button>
 	</div>
 </div>
