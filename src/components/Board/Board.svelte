@@ -6,6 +6,7 @@
 	import Settings from "../Settings/Settings.svelte";
 	import MobileMenu from "./MobileMenu/MobileMenu.svelte";
 	import isMobile from "$lib/utils/isMobile";
+	import { fade, slide } from "svelte/transition";
 
 	const DUMP_BOARD_TO_CONSOLE = true;
 
@@ -143,14 +144,7 @@
 </script>
 
 <svelte:window bind:innerWidth={windowInnerWidth} />
-<Settings
-	bind:visible={settingsVisible}
-	bind:boardSize={size}
-	bind:minePercentage
-	bind:isUnmuted
-	{defaultBoardSize}
-	{defaultMinePercentage} />
-<div class="w-screen h-screen flex flex-col items-center justify-center">
+<div class="w-full h-full flex flex-col items-center justify-center">
 	<Panel
 		{vt}
 		bind:vv
@@ -159,10 +153,21 @@
 		bind:settingsVisible
 		bind:board
 		{restartCallback} />
+	{#if settingsVisible}
+		<div transition:fade={{ duration: 80 }} class="z-20">
+			<Settings
+				bind:visible={settingsVisible}
+				bind:boardSize={size}
+				bind:minePercentage
+				bind:isUnmuted
+				{defaultBoardSize}
+				{defaultMinePercentage} />
+		</div>
+	{/if}
 	<div
 		id="inner-game"
 		style={`grid-template-columns: repeat(${size}, minmax(0, 1fr)); ${boardStyleStateForGameEndings}`}
-		class="grid w-fit border-lime-500">
+		class="grid w-fit bg-lime-300 border-lime-500">
 		{#each Array(size) as _, i}
 			{#each Array(size) as _, j}
 				{#if board.uninitialized}
@@ -188,17 +193,19 @@
 	</div>
 	<div class="flex flex-col gap-4" style={`width:${size * vv}${vt}`}>
 		{#if isMobile() && mobileControlPermitted}
-			<MobileMenu
-				coordinate={selectedCoordinate}
-				onReveal={(c) => {
-					if (c.value == -2) {
-						return initialClick(c);
-					}
-					leftClickHandler(c);
-				}}
-				onFlag={(c) => {
-					rightClickHandler(c);
-				}} />
+			<div transition:slide={{ duration: 250 }}>
+				<MobileMenu
+					coordinate={selectedCoordinate}
+					onReveal={(c) => {
+						if (c.value == -2) {
+							return initialClick(c);
+						}
+						leftClickHandler(c);
+					}}
+					onFlag={(c) => {
+						rightClickHandler(c);
+					}} />
+			</div>
 		{/if}
 		<div
 			class="h-0 pt-3 uppercase text-neutral-500 game-font text-center w-full"

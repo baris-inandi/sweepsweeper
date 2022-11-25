@@ -10,21 +10,12 @@
 	let minePercentage: number[] = [DEFAULT_MINE_PERCENTAGE];
 </script>
 
-<main class="select-none antialiased">
-	<div
-		class="z-20 outer bg-white w-screen h-screen flex items-center justify-center gap-8">
-		<Board
-			{vt}
-			size={boardSize[0]}
-			minePercentage={minePercentage[0]}
-			defaultBoardSize={DEFAULT_BOARD_SIZE}
-			defaultMinePercentage={DEFAULT_MINE_PERCENTAGE} />
-	</div>
-	<div
-		class="z-10 warning w-screen h-screen text-neutral-600 hidden items-center justify-center text-center px-8">
-		You need a bigger screen to play Minesweeper.
-	</div>
+<main
+	class="select-none antialiased z-20 outer bg-white w-full h-full flex items-center justify-center gap-8">
+	<Board
+		{vt}
+		size={boardSize[0]}
+		minePercentage={minePercentage[0]}
+		defaultBoardSize={DEFAULT_BOARD_SIZE}
+		defaultMinePercentage={DEFAULT_MINE_PERCENTAGE} />
 </main>
-
-<style scoped>
-</style>
