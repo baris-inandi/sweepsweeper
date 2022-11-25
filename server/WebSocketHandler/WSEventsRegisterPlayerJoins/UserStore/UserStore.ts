@@ -1,4 +1,4 @@
-import { IUserProps } from "./../IUser/IUser";
+import { IUserProps } from "./../IUser/IUser.ts";
 import IUser from "../IUser/IUser.ts";
 
 export type Room = Map<string, IUser>;
@@ -40,9 +40,7 @@ export default class UserStore {
 		room?.forEach((v, k) => {
 			out.push(v.props);
 		});
-		// return an array of IUser
-		console.log(x);
-		return x;
+		return out;
 	}
 
 	public forEachInRoom(
