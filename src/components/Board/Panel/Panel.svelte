@@ -31,7 +31,7 @@
 	</span>
 	<div class="flex h-full items-center gap-5">
 		<button on:click={restartCallback} class="text-center h-full rounded-md">
-			<div class={`fill-neutral-600" style="width:2.2${vt};height:2.2${vt};`}>
+			<div class="fill-neutral-600" style={`width:2.2${vt};height:2.2${vt};`}>
 				<RestartIcon />
 			</div>
 		</button>
