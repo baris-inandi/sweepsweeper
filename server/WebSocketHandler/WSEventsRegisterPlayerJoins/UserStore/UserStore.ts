@@ -1,3 +1,4 @@
+import { IUserProps } from "./../IUser/IUser";
 import IUser from "../IUser/IUser.ts";
 
 export type Room = Map<string, IUser>;
@@ -12,8 +13,10 @@ export default class UserStore {
 			this.innerStore.set(roomID, new Map<string, IUser>());
 		}
 		this.innerStore.get(roomID)?.set(socket.id, {
-			name,
-			flagCount: 0,
+			props: {
+				name,
+				flagCount: 0
+			},
 			socket
 		});
 	}
@@ -28,11 +31,18 @@ export default class UserStore {
 	}
 
 	public getUser(roomID: string, userID: string) {
-		return this.innerStore.get(roomID)?.get(userID);
+		return this.innerStore.get(roomID)?.get(userID)?.props;
 	}
 
-	public getRoom(roomID: string) {
-		return this.innerStore.get(roomID);
+	public getUsersInRoom(roomID: string) {
+		const room = this.innerStore.get(roomID);
+		const out = new Array<IUserProps>();
+		room?.forEach((v, k) => {
+			out.push(v.props);
+		});
+		// return an array of IUser
+		console.log(x);
+		return x;
 	}
 
 	public forEachInRoom(

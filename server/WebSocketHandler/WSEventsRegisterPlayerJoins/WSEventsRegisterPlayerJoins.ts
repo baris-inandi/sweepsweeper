@@ -22,11 +22,11 @@ export default class WSEventsRegisterPlayerJoins {
 			// create user
 			// send all sockets a playerlist update
 			this.userStore.registerUser(roomID, socket, uname);
-			console.log("new mf just joined to room", roomID);
+			console.log(uname, "joined", roomID);
 			this.userStore.emitForRoom(
 				roomID,
 				"playerlist-update",
-				this.userStore.getRoom(roomID)
+				this.userStore.getUsersInRoom(roomID)
 			);
 
 			// new player emit when they join the room
@@ -35,7 +35,7 @@ export default class WSEventsRegisterPlayerJoins {
 				this.userStore.emitForRoom(
 					roomID,
 					"playerlist-update",
-					this.userStore.getRoom(roomID)
+					this.userStore.getUsersInRoom(roomID)
 				);
 			});
 

@@ -14,7 +14,7 @@
 		});
 		socket?.on("playerlist-update", (data) => {
 			console.log(data);
-			players.push(data);
+			players = data;
 			players = players;
 		});
 		socket?.on("console", (data) => {
