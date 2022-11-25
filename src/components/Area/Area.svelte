@@ -24,7 +24,7 @@
 		}}
 		on:click|preventDefault={(e) => {
 			if (!bypassMobile) selectedCoordinate = coordinate;
-			if (isMobile() && !bypassMobile) return;
+			if (isMobile && !bypassMobile) return;
 			if (e.shiftKey || e.ctrlKey || e.metaKey || e.altKey)
 				return onRightClick(coordinate);
 			if (coordinate.flagged) return onRightClick(coordinate);
@@ -35,9 +35,9 @@
 		class={`cursor-default flex items-center justify-center
 		${
 			selectedCoordinate.ID() == coordinate.ID() &&
-			isMobile() &&
+			isMobile &&
 			coordinate.isHidden
-				? "z-30 border-2 border-lime-600 shadow-lg"
+				? "z-30 border-2 border-lime-600"
 				: ""
 		}
 		${

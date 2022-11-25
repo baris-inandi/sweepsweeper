@@ -154,7 +154,7 @@
 		bind:board
 		{restartCallback} />
 	{#if settingsVisible}
-		<div transition:fade={{ duration: 80 }} class="z-20">
+		<div transition:fade={{ duration: 100 }} class="z-20">
 			<Settings
 				bind:visible={settingsVisible}
 				bind:boardSize={size}
@@ -192,7 +192,7 @@
 		{/each}
 	</div>
 	<div class="flex flex-col gap-4" style={`width:${size * vv}${vt}`}>
-		{#if isMobile() && mobileControlPermitted}
+		{#if isMobile && mobileControlPermitted}
 			<div transition:slide={{ duration: 250 }}>
 				<MobileMenu
 					coordinate={selectedCoordinate}

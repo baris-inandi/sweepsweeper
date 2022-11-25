@@ -15,18 +15,18 @@
 </script>
 
 <div class="h-fit w-full">
-	<div class="flex py-3 gap-3">
+	<div class="flex pt-3 gap-3">
 		<button
 			on:click={() => {
 				act(false);
 			}}
-			class="font-medium text-white bg-lime-600 active:bg-lime-700 w-full px-2 py-3"
+			class="font-medium text-white bg-lime-600 active:bg-lime-700 w-full px-2 py-5"
 			>Reveal</button>
 		<button
 			on:click={() => {
 				act(true);
 			}}
-			class="font-medium text-white bg-orange-500 active:bg-orange-600 w-full px-2 py-3"
+			class="font-medium text-white bg-red-500 active:bg-red-700 w-full px-2 py-5"
 			>Flag</button>
 	</div>
 </div>
