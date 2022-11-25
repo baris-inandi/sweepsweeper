@@ -37,7 +37,7 @@
 			selectedCoordinate.ID() == coordinate.ID() &&
 			isMobile() &&
 			coordinate.isHidden
-				? "z-30 border-2 border-lime-700 shadow-lg rounded-sm shadow-lime-300"
+				? "z-30 border-2 border-lime-600 shadow-lg"
 				: ""
 		}
 		${
