@@ -143,6 +143,13 @@
 </script>
 
 <svelte:window bind:innerWidth={windowInnerWidth} />
+<Settings
+	bind:visible={settingsVisible}
+	bind:boardSize={size}
+	bind:minePercentage
+	bind:isUnmuted
+	{defaultBoardSize}
+	{defaultMinePercentage} />
 <div class="w-screen h-screen flex flex-col items-center justify-center">
 	<Panel
 		{vt}
@@ -152,14 +159,8 @@
 		bind:settingsVisible
 		bind:board
 		{restartCallback} />
-	<Settings
-		bind:visible={settingsVisible}
-		bind:boardSize={size}
-		bind:minePercentage
-		bind:isUnmuted
-		{defaultBoardSize}
-		{defaultMinePercentage} />
 	<div
+		id="inner-game"
 		style={`grid-template-columns: repeat(${size}, minmax(0, 1fr)); ${boardStyleStateForGameEndings}`}
 		class="grid w-fit border-lime-500">
 		{#each Array(size) as _, i}

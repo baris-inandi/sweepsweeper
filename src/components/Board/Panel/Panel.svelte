@@ -13,7 +13,7 @@
 
 <div
 	class="my-4 flex justify-between items-center"
-	style={`width:${vv * size}${vt};font-size:1.6${vt};`}>
+	style={`width:${vv * size}${vt};font-size:max(1.6${vt}, 10px);`}>
 	<div>
 		<div class="flex gap-4 items-center">
 			<Flag {vt} vv={5} />
