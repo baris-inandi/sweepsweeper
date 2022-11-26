@@ -20,7 +20,12 @@ export default (io: Server) => {
 					const roomIDString = Array.isArray(roomIDPre)
 						? roomIDPre.join("")
 						: roomIDPre;
-					return validateID(roomIDString) ? roomIDString : generateID();
+					if (validateID(roomIDString)) {
+						return roomIDString;
+					} else {
+						socket.emit("invalid-id");
+						socket.disconnect();
+					}
 				}
 			})();
 			const uname = unamePre ? unamePre.toString() : "Anonymous";

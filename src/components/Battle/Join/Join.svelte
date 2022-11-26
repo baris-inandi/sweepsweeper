@@ -1,11 +1,8 @@
 <script lang="ts">
-	import fscreen from "fscreen";
 	import RaysBackground from "../shared/RaysBackground.svelte";
-	import { onMount } from "svelte";
 	import { goto } from "$app/navigation";
 	import BattleLogo from "../shared/BattleLogo.svelte";
 
-	const REQUESTS_FULLSCREEN = false;
 	let gameCode = "";
 	let uname = "";
 
@@ -16,12 +13,6 @@
 			.replace(/[^A-Z0-9]/, "");
 		uname = uname.substring(0, 15).replace(/[^A-Za-z0-9]/, "");
 	}
-
-	onMount(() => {
-		if (REQUESTS_FULLSCREEN) {
-			fscreen.requestFullscreen(document.body);
-		}
-	});
 </script>
 
 <RaysBackground>
@@ -60,10 +51,10 @@
 					? ""
 					: "saturate-50"
 			} ${
-				gameCode.length == 8 && uname.length > 2 && uname.length < 16
-					? ""
-					: "pointer-events-none"
-			}
+					gameCode.length == 8 && uname.length > 2 && uname.length < 16
+						? ""
+						: "pointer-events-none"
+				}
 			`}>
 				LET'S GO
 			</button>

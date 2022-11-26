@@ -3,26 +3,30 @@
 	import { page } from "$app/stores";
 	import RaysBackground from "../../shared/RaysBackground.svelte";
 	import BattleLogo from "../../shared/BattleLogo.svelte";
+	import { goto } from "$app/navigation";
 
 	let socket: Socket | undefined;
 	let players = new Array<{ name: string; flagCount: number; color: string }>();
 
 	let name = $page.url.searchParams.get("name");
-	let id = "3S20FKU7";
+	let id = $page.params.id;
 	let addr = `localhost:3000/ms-battle?join=${id}&name=${name}`;
 	console.log(addr);
 	socket = io(addr);
 
-	socket?.on("game-start", (data) => {
+	socket.on("game-start", (data) => {
 		console.log("> game-start", data);
 	});
-	socket?.on("playerlist-update", (data) => {
+	socket.on("playerlist-update", (data) => {
 		console.log(data);
 		players = data[0];
 		players.reverse();
 		players = players;
 	});
-	socket?.on("console", (data) => {
+	socket.on("invalid-id", () => {
+		goto("/battle");
+	});
+	socket.on("console", (data) => {
 		console.log(data);
 	});
 </script>

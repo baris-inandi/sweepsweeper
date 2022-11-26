@@ -7,6 +7,7 @@
 	import MobileMenu from "./MobileMenu/MobileMenu.svelte";
 	import isMobile from "$lib/utils/isMobile";
 	import { fade, slide } from "svelte/transition";
+	import KeyCapturer from "./KeyCapturer/KeyCapturer.svelte";
 
 	const DUMP_BOARD_TO_CONSOLE = true;
 
@@ -144,6 +145,7 @@
 </script>
 
 <svelte:window bind:innerWidth={windowInnerWidth} />
+<KeyCapturer {restartCallback} />
 <div class="w-full h-full flex flex-col items-center justify-center">
 	<Panel
 		{vt}
