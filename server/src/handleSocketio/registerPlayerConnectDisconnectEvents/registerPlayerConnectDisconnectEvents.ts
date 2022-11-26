@@ -1,61 +1,57 @@
-import { validateID, generateID } from "./roomID/roomID";
+import { generateID } from "../shared/roomID/roomID";
 import type { Server } from "socket.io";
-import UserStore from "./UserStore/UserStore";
-
-// Map[roomID][userID] = <IUser>
-const userStore = new UserStore();
+import $userStore from "../store/userStore";
 
 export default (io: Server) => {
 	// send room id with query param `id`
 	// if no `id` param is provided, a new room will be created
 	// provide a uname param too
-	io.of("/ms-battle").on("connection", (socket) => {
+	io.of("/sw-battle").on("connection", (socket) => {
 		const getParams = () => {
 			const roomIDPre = socket.handshake.query["join"];
 			const unamePre = socket.handshake.query["name"];
 			const roomID = (() => {
-				if (roomIDPre === undefined) {
-					return generateID();
+				if (typeof roomIDPre === "undefined" || roomIDPre === null) {
+					const id = generateID();
+					socket.emit("generated-id-for-host", id);
+					return id;
 				} else {
 					const roomIDString = Array.isArray(roomIDPre)
 						? roomIDPre.join("")
 						: roomIDPre;
-					if (validateID(roomIDString)) {
+					if ($userStore.isJoinableAt(roomIDString).joinable)
 						return roomIDString;
-					} else {
-						socket.emit("invalid-id");
+					else {
 						socket.disconnect();
+						return "";
 					}
 				}
 			})();
-			const uname = unamePre ? unamePre.toString() : "Anonymous";
+			const uname = unamePre ? unamePre.toString() : "player";
 			return { roomID, uname };
 		};
 		const { roomID, uname } = getParams();
 
 		// create user
 		// send all sockets a playerlist update
-		userStore.registerUser(roomID, socket, uname);
+		$userStore.registerUser(roomID, socket, uname);
 		console.log(uname, "joined", roomID);
-		userStore.emitForRoom(
+		$userStore.emitForRoom(
 			roomID,
 			"playerlist-update",
-			userStore.getUsersInRoom(roomID)
+			$userStore.getUsersInRoom(roomID)
 		);
 
 		// new player emit when they join the room
 		socket.on("disconnect", (_) => {
-			userStore.removeUser(roomID, socket.id);
-			userStore.emitForRoom(
+			$userStore.removeUser(roomID, socket.id);
+			$userStore.emitForRoom(
 				roomID,
 				"playerlist-update",
-				userStore.getUsersInRoom(roomID)
+				$userStore.getUsersInRoom(roomID)
 			);
-		});
-
-		// game start event
-		socket.on("start-game", (gameOptions) => {
-			userStore.emitForRoom(roomID, "start-game", gameOptions);
+			if ($userStore.getUsersInRoom(roomID).length <= 0)
+				$userStore.innerStore.delete(roomID);
 		});
 	});
 };

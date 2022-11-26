@@ -75,7 +75,7 @@
 				</p>
 			{:else if coordinate.isMine()}
 				<div
-					in:scale={{ duration: 300 }}
+					in:scale={{ duration: 350 }}
 					class={`rounded-full ${
 						isExploded ? "bg-orange-600" : "bg-neutral-600"
 					}`}

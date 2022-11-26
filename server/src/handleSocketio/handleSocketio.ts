@@ -1,6 +1,7 @@
 import type { Server as HTTPServer } from "http";
 import { Server } from "socket.io";
-import registerPlayerJoinEvents from "./registerPlayerJoinEvents/registerPlayerJoinEvents";
+import registerPlayerConnectDisconnectEvents from "./registerPlayerConnectDisconnectEvents/registerPlayerConnectDisconnectEvents";
+import registerPlayerRoomAvailabilityEvents from "./registerPlayerRoomAvailabilityEvents/registerPlayerRoomAvailabilityEvents";
 
 export default (server: HTTPServer) => {
 	const io = new Server(server, {
@@ -11,5 +12,6 @@ export default (server: HTTPServer) => {
 		pingInterval: 1000,
 		pingTimeout: 4000
 	});
-	registerPlayerJoinEvents(io);
+	registerPlayerConnectDisconnectEvents(io);
+	registerPlayerRoomAvailabilityEvents(io);
 };

@@ -1,3 +1,4 @@
+import { validateID } from "../roomID/roomID";
 import type { Socket } from "socket.io";
 import type IUser from "../IUser/IUser";
 import type { IUserProps } from "../IUser/IUser";
@@ -9,19 +10,27 @@ export default class UserStore {
 	innerStore = new Map<string, Room>();
 
 	public registerUser(roomID: string, socket: Socket, name: string) {
+		let host = false;
+		if (name.length > 15) name = name.substring(0, 15);
 		if (!this.innerStore.has(roomID)) {
 			// if key of roomID does not exist, create it
 			console.log("Created room " + roomID);
+			host = true;
 			this.innerStore.set(roomID, new Map<string, IUser>());
 		}
 		this.innerStore.get(roomID)?.set(socket.id, {
 			props: {
 				name,
 				flagCount: 0,
-				color: generateRandomColor()
+				color: generateRandomColor(),
+				host
 			},
 			socket
 		});
+	}
+
+	public roomExists(roomID: string): boolean {
+		return this.innerStore.has(roomID);
 	}
 
 	public removeUser(roomID: string, userID: string) {
@@ -55,7 +64,17 @@ export default class UserStore {
 
 	public emitForRoom(roomID: string, event: string, ...data: any) {
 		this.forEachInRoom(roomID, (user, _) => {
-			user.socket.emit(event, data);
+			user.socket.emit(event, ...data);
 		});
+	}
+
+	public isJoinableAt(roomID: string): { error: string; joinable: boolean } {
+		if (!validateID(roomID))
+			return { error: "Not a valid room ID", joinable: false };
+		if (!this.roomExists(roomID))
+			return { error: "Room does not exist", joinable: false };
+		if (this.getUsersInRoom(roomID).length >= 20)
+			return { error: "Room has too many players", joinable: false };
+		return { error: "", joinable: true };
 	}
 }

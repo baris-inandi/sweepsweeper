@@ -8,18 +8,24 @@
 	let socket: Socket | undefined;
 	let players = new Array<{ name: string; flagCount: number; color: string }>();
 
-	let name = $page.url.searchParams.get("name");
+	let uname = $page.url.searchParams.get("name") ?? "Player";
 	let id = $page.params.id;
-	let addr = `localhost:3000/ms-battle?join=${id}&name=${name}`;
-	console.log(addr);
+	let addr = `localhost:3000/sw-battle?join=${id}&name=${uname}`;
+	if (id == "ashost") {
+		addr = `localhost:3000/sw-battle?name=${uname}`;
+	}
 	socket = io(addr);
 
+	socket.on("generated-id-for-host", (data) => {
+		id = data;
+		goto(`/battle/join/${id}?name=${uname}`);
+	});
 	socket.on("game-start", (data) => {
 		console.log("> game-start", data);
 	});
 	socket.on("playerlist-update", (data) => {
 		console.log(data);
-		players = data[0];
+		players = data;
 		players.reverse();
 		players = players;
 	});
@@ -36,9 +42,17 @@
 		<BattleLogo />
 		<div class="w-full font-game text-center text-white">
 			<span class="text-sm">Game ID</span>
-			<h3 class="text-lg">
-				{id}
-			</h3>
+			<div class="select-text">
+				<h3 class="text-lg">
+					{id == "ashost" ? "" : id}
+				</h3>
+				<p class="font-sans pt-6">
+					<span class="select-none"> ...or share via link: </span>
+					<br />
+					{`${$page.url.origin}/battle?id=${id}`}
+				</p>
+			</div>
+			<button>READY</button>
 		</div>
 	</div>
 	<div class="border-4 border-black w-full max-w-lg h-96">
@@ -57,6 +71,6 @@
 		</div>
 	</div>
 	<p class="text-white text-sm pt-4 font-sans">
-		Waiting for host to start the game...
+		Waiting for everyone to be ready
 	</p>
 </RaysBackground>
