@@ -9,6 +9,17 @@ export type Room = Map<string, IUser>;
 export default class UserStore {
 	innerStore = new Map<string, Room>();
 
+	public setPlayerReady(roomID: string, userID: string) {
+		const user = this.innerStore.get(roomID)?.get(userID);
+		if (user) {
+			console.log("cccccccccc");
+			user.props.ready = !user.props.ready;
+			return user.props.ready;
+		}
+		console.log("dddddddd");
+		return false;
+	}
+
 	public registerUser(roomID: string, socket: Socket, name: string) {
 		let host = false;
 		if (name.length > 15) name = name.substring(0, 15);
@@ -23,7 +34,8 @@ export default class UserStore {
 				name,
 				flagCount: 0,
 				color: generateRandomColor(),
-				host
+				host,
+				ready: false
 			},
 			socket
 		});

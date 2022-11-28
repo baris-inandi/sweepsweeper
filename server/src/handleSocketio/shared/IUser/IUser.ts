@@ -5,6 +5,7 @@ export interface IUserProps {
 	flagCount: number;
 	color: string;
 	host: boolean;
+	ready: boolean;
 }
 
 export default interface IUser {
