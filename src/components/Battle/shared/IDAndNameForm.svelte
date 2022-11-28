@@ -23,7 +23,9 @@
 	}
 	if (forHost) {
 		submitCallback = () => {
-			goto(`/battle/join/ashost?name=${uname}`);
+			let socket = io(`localhost:3000/sw-battle-pre-join-host`);
+			socket.on("host-id")
+			goto(`/battle/join/${id}?name=${uname}`);
 		};
 	}
 

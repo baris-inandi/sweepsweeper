@@ -1,3 +1,4 @@
+import { generateID } from "./../shared/roomID/roomID";
 import type { Server } from "socket.io";
 import $userStore from "../store/userStore";
 
@@ -8,5 +9,10 @@ export default (io: Server) => {
 		let status = { joinable: false, error: "Something went wrong" };
 		if (typeof roomID === "string") status = $userStore.isJoinableAt(roomID);
 		socket.emit("pre-join-answer-joinable", status);
+	});
+
+	io.of("/sw-battle-pre-join-host").on("connection", (socket) => {
+		// TODO: create room with generated id and retyrn it to the host
+		socket.emit("host-id", generateID());
 	});
 };

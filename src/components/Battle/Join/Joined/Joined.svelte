@@ -13,9 +13,6 @@
 	let uname = $page.url.searchParams.get("name") ?? "Player";
 	let id = $page.params.id;
 	let addr = `localhost:3000/sw-battle?join=${id}&name=${uname}`;
-	if (id == "ashost") {
-		addr = `localhost:3000/sw-battle?name=${uname}`;
-	}
 	socket = io(addr);
 
 	const readyPlayer = () => {
@@ -26,10 +23,6 @@
 		});
 	};
 
-	socket.on("generated-id-for-host", (data) => {
-		id = data;
-		goto(`/battle/join/${id}?name=${uname}`);
-	});
 	socket.on("game-start", (data) => {
 		console.log("> game-start", data);
 	});
@@ -54,7 +47,7 @@
 			<span class="text-sm">Game ID</span>
 			<div class="select-text">
 				<h3 class="text-lg">
-					{id == "ashost" ? "" : id}
+					{id}
 				</h3>
 				<p class="font-sans pt-6">
 					<span class="select-none"> ...or share via link: </span>

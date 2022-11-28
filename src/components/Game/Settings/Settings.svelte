@@ -68,6 +68,8 @@
 		</div>
 		<div class="flex gap-3 flex-col pt-8">
 			<button
+				name="reset all settings to default"
+				aria-label="reset all settings to default"
 				on:click={() => {
 					visible = false;
 					boardSize = defaultBoardSize;
@@ -78,6 +80,8 @@
 				Reset to Defaults
 			</button>
 			<button
+				name="exit settings"
+				aria-label="exit settings"
 				on:click={() => {
 					visible = false;
 				}}

@@ -1,4 +1,3 @@
-import { generateID } from "../shared/roomID/roomID";
 import type { Server } from "socket.io";
 import $userStore from "../store/userStore";
 
@@ -7,9 +6,8 @@ const roomIDGenerator = (
 	socket: any
 ) => {
 	if (typeof roomIDPre === "undefined" || roomIDPre === null) {
-		const id = generateID();
-		socket.emit("generated-id-for-host", id);
-		return id;
+		socket.disconnect();
+		return "";
 	} else {
 		const roomIDString = Array.isArray(roomIDPre)
 			? roomIDPre.join("")

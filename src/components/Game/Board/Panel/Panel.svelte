@@ -30,16 +30,22 @@
 		})()}
 	</span>
 	<div class="flex h-full items-center gap-5">
-		<button on:click={restartCallback} class="text-center h-full rounded-md">
+		<button
+			on:click={restartCallback}
+			class="text-center h-full rounded-md"
+			aria-label="restart game"
+			name="restart game">
 			<div class="fill-neutral-600" style={`width:2.2${vt};height:2.2${vt};`}>
 				<RestartIcon />
 			</div>
 		</button>
 		<button
+			aria-label="settings"
+			name="settings"
 			on:click={() => {
 				settingsVisible = true;
 			}}
-			class="text-center bg-lime-600 rounded-md text-white"
+			class="text-center bg-lime-700 rounded-md text-white"
 			style={`padding: 1${vt} 2${vt};`}>Settings</button>
 	</div>
 </div>

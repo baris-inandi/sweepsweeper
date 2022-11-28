@@ -19,6 +19,8 @@
 		(coordinate.x % 2 == 0) != (coordinate.y % 2 == 0) ? "brightness-95" : ""
 	}`}>
 	<button
+		name={`Board cell at coordinates (${coordinate.ID()})`}
+		aria-label={`Board cell at coordinates (${coordinate.ID()})`}
 		tabindex="-1"
 		on:contextmenu|preventDefault={(e) => {
 			onRightClick(coordinate);
