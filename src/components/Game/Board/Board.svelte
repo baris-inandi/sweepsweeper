@@ -8,6 +8,7 @@
 	import isMobile from "$lib/utils/isMobile";
 	import { fade, slide } from "svelte/transition";
 	import KeyCapturer from "./KeyCapturer/KeyCapturer.svelte";
+	import KeyboardPlay from "./KeyboardPlay/KeyboardPlay.svelte";
 
 	const DUMP_BOARD_TO_CONSOLE = true;
 
@@ -145,7 +146,8 @@
 </script>
 
 <svelte:window bind:innerWidth={windowInnerWidth} />
-<KeyCapturer {restartCallback} />
+<KeyCapturer keycode="Escape" callback={restartCallback} />
+<KeyboardPlay />
 <div class="w-full h-full flex flex-col items-center justify-center">
 	<Panel
 		{vt}

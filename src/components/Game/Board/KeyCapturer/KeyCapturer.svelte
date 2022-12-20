@@ -1,8 +1,9 @@
 <script lang="ts">
-	export let restartCallback: () => void;
+	export let callback: () => void;
+	export let keycode: string;
 
 	function onKeyDown(e: KeyboardEvent) {
-		if (e.code == "Escape") restartCallback();
+		if (e.code == keycode) callback();
 	}
 </script>
 
