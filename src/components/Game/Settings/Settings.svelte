@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Slider from "@bulatdashiev/svelte-slider/src/Slider.svelte";
 	import Toggle from "svelte-toggle";
+	import isMobile from "../../../lib/utils/isMobile";
 
 	const MIN_BOARD_SIZE = 8;
 	const MAX_BOARD_SIZE = 36;
@@ -13,6 +14,7 @@
 	export let defaultBoardSize: number;
 	export let defaultMinePercentage: number;
 	export let isUnmuted: boolean;
+	export let isTouchMode: boolean;
 
 	let formattedBoardSize = [boardSize];
 	let formattedMinePercentage = [minePercentage];
@@ -54,7 +56,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="flex justify-between items-center py-4">
+			<div class="flex justify-between items-center pt-3">
 				<span>Sound Effects</span>
 				<Toggle
 					hideLabel
@@ -65,6 +67,19 @@
 					off=""
 					bind:toggled={isUnmuted} />
 			</div>
+			{#if !isMobile(false)}
+				<div class="flex justify-between items-center">
+					<span>Touch Mode</span>
+					<Toggle
+						hideLabel
+						switchColor="#fff"
+						toggledColor="#5784fd"
+						untoggledColor="#cdcdcd"
+						on=""
+						off=""
+						bind:toggled={isTouchMode} />
+				</div>
+			{/if}
 		</div>
 		<div class="flex gap-3 flex-col pt-8">
 			<button

@@ -22,7 +22,7 @@
 			on:click={() => {
 				act(false);
 			}}
-			class="font-medium text-white bg-lime-600 active:bg-lime-700 w-full px-2 py-5"
+			class="font-medium text-white bg-cyan-700 active:bg-cyan-800 w-full px-1 py-5 font-boxy text-lg"
 			>Reveal</button>
 		<button
 			name="flag selected cell"
@@ -30,7 +30,7 @@
 			on:click={() => {
 				act(true);
 			}}
-			class="font-medium text-white bg-red-500 active:bg-red-700 w-full px-2 py-5"
+			class="font-medium text-white bg-red-500 active:bg-red-700 w-full px-1 py-5 font-boxy text-lg"
 			>Flag</button>
 	</div>
 </div>

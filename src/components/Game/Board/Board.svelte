@@ -1,14 +1,14 @@
 <script lang="ts">
 	import Coordinate from "$lib/Coordinate/Coordinate";
 	import MinesweeperBoard from "$lib/MinesweeperBoard";
-	import Area from "../Area/Area.svelte";
-	import Panel from "./Panel/Panel.svelte";
-	import Settings from "../Settings/Settings.svelte";
-	import MobileMenu from "./MobileMenu/MobileMenu.svelte";
 	import isMobile from "$lib/utils/isMobile";
 	import { fade, slide } from "svelte/transition";
-	import KeyCapturer from "./KeyCapturer/KeyCapturer.svelte";
+	import Area from "../Area/Area.svelte";
+	import Settings from "../Settings/Settings.svelte";
 	import KeyboardPlay from "./KeyboardPlay/KeyboardPlay.svelte";
+	import KeyCapturer from "./KeyCapturer/KeyCapturer.svelte";
+	import MobileMenu from "./MobileMenu/MobileMenu.svelte";
+	import Panel from "./Panel/Panel.svelte";
 
 	const DUMP_BOARD_TO_CONSOLE = true;
 
@@ -21,6 +21,7 @@
 
 	let settingsVisible = false;
 	let isUnmuted = true;
+	let isTouchMode = false;
 
 	let boardStyleStateForGameEndings = "";
 	if (DUMP_BOARD_TO_CONSOLE) console.log(board.toString());
@@ -164,6 +165,7 @@
 				bind:boardSize={size}
 				bind:minePercentage
 				bind:isUnmuted
+				bind:isTouchMode
 				{defaultBoardSize}
 				{defaultMinePercentage} />
 		</div>
@@ -177,6 +179,7 @@
 				{#if board.uninitialized}
 					<Area
 						{vt}
+						{isTouchMode}
 						bind:selectedCoordinate
 						bypassMobile
 						onLeftClick={initialClick}
@@ -186,6 +189,7 @@
 				{:else}
 					<Area
 						{vt}
+						{isTouchMode}
 						bind:selectedCoordinate
 						onLeftClick={leftClickHandler}
 						onRightClick={rightClickHandler}
@@ -196,7 +200,7 @@
 		{/each}
 	</div>
 	<div class="flex flex-col gap-4" style={`width:${size * vv}${vt}`}>
-		{#if isMobile && mobileControlPermitted}
+		{#if isMobile(isTouchMode) && mobileControlPermitted}
 			<div transition:slide={{ duration: 250 }}>
 				<MobileMenu
 					coordinate={selectedCoordinate}

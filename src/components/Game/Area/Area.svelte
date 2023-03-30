@@ -10,6 +10,7 @@
 	export let selectedCoordinate: Coordinate;
 	export let onLeftClick: (c: Coordinate) => void;
 	export let onRightClick: (c: Coordinate) => void;
+	export let isTouchMode: boolean = false;
 
 	let isExploded = false;
 </script>
@@ -27,7 +28,7 @@
 		}}
 		on:click|preventDefault={(e) => {
 			if (!bypassMobile) selectedCoordinate = coordinate;
-			if (isMobile && !bypassMobile) return;
+			if (isMobile(isTouchMode) && !bypassMobile) return;
 			if (e.shiftKey || e.ctrlKey || e.metaKey || e.altKey)
 				return onRightClick(coordinate);
 			if (coordinate.flagged) return onRightClick(coordinate);
@@ -38,7 +39,7 @@
 		class={`cursor-default flex items-center justify-center
 		${
 			selectedCoordinate.ID() == coordinate.ID() &&
-			isMobile &&
+			isMobile(isTouchMode) &&
 			coordinate.isHidden
 				? "z-30 border-2 border-lime-600"
 				: ""
@@ -68,7 +69,7 @@
 							"text-yellow-500",
 							"text-pink-500",
 							"text-neutral-600",
-							"text-black"
+							"text-black",
 						][coordinate.value - 1]}
 					style={`filter: contrast(0.4) brightness(1.15); font-size: ${
 						vv < 4 ? vv / 2 : vv / 3

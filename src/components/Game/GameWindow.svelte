@@ -7,7 +7,7 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 {#if innerWidth > 0 && innerHeight > 0}
-	<div style={`width:100vw;height:${isMobile ? "85vh" : "100vh"}`}>
+	<div style={`width:100vw;height:${isMobile(false) ? "85vh" : "100vh"}`}>
 		<Game vt={innerHeight > innerWidth ? "vw" : "vh"} />
 	</div>
 {/if}
