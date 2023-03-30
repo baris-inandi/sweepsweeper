@@ -7,7 +7,7 @@ require("esbuild").build({
 	outfile: "dist/index.js",
 	plugins: [
 		typecheckPlugin({
-			omitStartLog: true
-		})
-	]
+			omitStartLog: true,
+		}),
+	],
 });

@@ -1,0 +1,15 @@
+{
+	"scripts": {
+		"dev": "node concurrently.cjs",
+		"host": "node concurrently.cjs --host",
+		"vite-dev": "vite dev",
+		"vite-host": "vite dev --host",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --plugin-search-dir . --write .",
+		"vercel": "vercel --prod"
+	}
+}

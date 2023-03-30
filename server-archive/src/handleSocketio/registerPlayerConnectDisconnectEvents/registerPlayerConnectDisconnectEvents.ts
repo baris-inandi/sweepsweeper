@@ -3,7 +3,7 @@ import $userStore from "../store/userStore";
 
 const roomIDGenerator = (
 	roomIDPre: string | string[] | undefined,
-	socket: any
+	socket: any,
 ) => {
 	if (typeof roomIDPre === "undefined" || roomIDPre === null) {
 		socket.disconnect();
@@ -41,7 +41,7 @@ export default (io: Server) => {
 		$userStore.emitForRoom(
 			roomID,
 			"playerlist-update",
-			$userStore.getUsersInRoom(roomID)
+			$userStore.getUsersInRoom(roomID),
 		);
 
 		// new player emit when they join the room
@@ -50,7 +50,7 @@ export default (io: Server) => {
 			$userStore.emitForRoom(
 				roomID,
 				"playerlist-update",
-				$userStore.getUsersInRoom(roomID)
+				$userStore.getUsersInRoom(roomID),
 			);
 			if ($userStore.getUsersInRoom(roomID).length <= 0)
 				$userStore.innerStore.delete(roomID);

@@ -91,7 +91,7 @@
 					minePercentage = defaultMinePercentage;
 					isUnmuted = true;
 				}}
-				class="w-full p-2  text-neutral-500 rounded-md border border-neutral-300">
+				class="w-full p-2 text-neutral-500 rounded-md border border-neutral-300">
 				Reset to Defaults
 			</button>
 			<button

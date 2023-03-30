@@ -8,10 +8,10 @@ export default (server: HTTPServer) => {
 	const io = new Server(server, {
 		cors: {
 			origin: true, // TODO: this might be risky
-			methods: ["GET", "POST"]
+			methods: ["GET", "POST"],
 		},
 		pingInterval: 1000,
-		pingTimeout: 4000
+		pingTimeout: 4000,
 	});
 	registerPlayerConnectDisconnectEvents(io);
 	registerPlayerRoomAvailabilityEvents(io);

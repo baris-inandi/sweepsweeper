@@ -1,0 +1,7 @@
+{
+	"watch": ["."],
+	"ignore": ["dist", "node_modules"],
+	"ext": "ts,json,js,cjs",
+	"exec": "npm run build; npm run start",
+	"delay": "700"
+}

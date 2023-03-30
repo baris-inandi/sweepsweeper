@@ -63,7 +63,7 @@ export default class Coordinate {
 	public static neighborsOf(
 		x: number,
 		y: number,
-		margin: number
+		margin: number,
 	): Coordinate[] {
 		const c = new Coordinate(x, y, -2);
 		return c.getNeighbors(margin);
@@ -79,9 +79,9 @@ export default class Coordinate {
 				new Coordinate(this.x + 1, this.y, -2),
 				new Coordinate(this.x - 1, this.y + 1, -2),
 				new Coordinate(this.x, this.y + 1, -2),
-				new Coordinate(this.x + 1, this.y + 1, -2)
+				new Coordinate(this.x + 1, this.y + 1, -2),
 			],
-			margin
+			margin,
 		);
 	}
 
@@ -99,9 +99,9 @@ export default class Coordinate {
 				new Coordinate(this.x + 1, this.y - 1, -2),
 				new Coordinate(this.x + 1, this.y, -2),
 				new Coordinate(this.x + 1, this.y + 1, -2),
-				new Coordinate(this.x + 2, this.y, -2)
+				new Coordinate(this.x + 2, this.y, -2),
 			],
-			margin
+			margin,
 		);
 	}
 
@@ -111,9 +111,9 @@ export default class Coordinate {
 				new Coordinate(this.x + 1, this.y, -2),
 				new Coordinate(this.x - 1, this.y, -2),
 				new Coordinate(this.x, this.y + 1, -2),
-				new Coordinate(this.x, this.y - 1, -2)
+				new Coordinate(this.x, this.y - 1, -2),
 			],
-			margin
+			margin,
 		);
 	}
 
@@ -141,7 +141,7 @@ export default class Coordinate {
 		return new Coordinate(
 			Math.floor(Math.random() * (limit - 1)),
 			Math.floor(Math.random() * (limit - 1)),
-			-1
+			-1,
 		);
 	}
 }

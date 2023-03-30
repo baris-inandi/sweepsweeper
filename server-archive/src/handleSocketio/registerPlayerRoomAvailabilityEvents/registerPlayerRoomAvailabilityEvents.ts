@@ -1,5 +1,5 @@
-import { generateID } from "./../shared/roomID/roomID";
 import type { Server } from "socket.io";
+import { generateID } from "../shared/roomID/roomID";
 import $userStore from "../store/userStore";
 
 export default (io: Server) => {

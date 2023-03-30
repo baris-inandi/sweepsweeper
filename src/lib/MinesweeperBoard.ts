@@ -14,7 +14,7 @@ export default class MinesweeperBoard {
 	constructor(
 		boardSize: number,
 		minePercentage: number,
-		startPoint: Coordinate | null
+		startPoint: Coordinate | null,
 	) {
 		this.mineRatio = minePercentage / 100;
 		const inner = new Array<Array<Coordinate>>();
@@ -91,7 +91,7 @@ export default class MinesweeperBoard {
 				this.inner[i][j].setValue(
 					neighbors.filter((x) => {
 						return x.isMine();
-					}).length as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+					}).length as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8,
 				);
 			}
 		}

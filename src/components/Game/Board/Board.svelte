@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Coordinate from "$lib/Coordinate/Coordinate";
-	import MinesweeperBoard from "$lib/MinesweeperBoard";
-	import isMobile from "$lib/utils/isMobile";
 	import { fade, slide } from "svelte/transition";
+	import Coordinate from "../../../lib/Coordinate/Coordinate";
+	import MinesweeperBoard from "../../../lib/MinesweeperBoard";
+	import isMobile from "../../../lib/utils/isMobile";
 	import Area from "../Area/Area.svelte";
 	import Settings from "../Settings/Settings.svelte";
 	import KeyboardPlay from "./KeyboardPlay/KeyboardPlay.svelte";
@@ -47,14 +47,14 @@
 	let timer = 0;
 
 	let currentPlayingSounds = 0;
-	const sound = async (path: string, vol: number = 0.75) => {
+	const sound = async (path: string, vol = 0.75) => {
 		if (currentPlayingSounds > 0) return;
 		currentPlayingSounds++;
 		forceSound(path, vol);
 		currentPlayingSounds--;
 	};
 
-	const forceSound = async (path: string, vol: number = 0.75) => {
+	const forceSound = async (path: string, vol = 0.75) => {
 		if (!isUnmuted) vol = 0;
 		const audio = new Audio(path);
 		audio.volume = vol;
@@ -82,7 +82,7 @@
 		forceSound("/sounds/explode.mp3");
 		boardStyleStateForGameEndings =
 			"animation:0.5s shake; animation-timing-function: ease-out; pointer-events: none;";
-		board.mines.forEach((mine) => {
+		board.mines.forEach((mine: Coordinate) => {
 			const soundInterval = setTimeout(() => {
 				if (mine.flagged || mine.ID() == startCoordinate.ID()) return;
 				mine.reveal();

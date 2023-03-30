@@ -35,9 +35,9 @@ export default class UserStore {
 				flagCount: 0,
 				color: generateRandomColor(),
 				host,
-				ready: false
+				ready: false,
 			},
-			socket
+			socket,
 		});
 	}
 
@@ -69,7 +69,7 @@ export default class UserStore {
 
 	public forEachInRoom(
 		roomID: string,
-		callback: (value: IUser, key: string) => void
+		callback: (value: IUser, key: string) => void,
 	) {
 		this.innerStore.get(roomID)?.forEach(callback);
 	}

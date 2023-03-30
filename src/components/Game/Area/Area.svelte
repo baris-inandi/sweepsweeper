@@ -5,12 +5,12 @@
 	import Flag from "./Flag/Flag.svelte";
 	export let vv: number;
 	export let vt: string;
-	export let bypassMobile: boolean = false;
+	export let bypassMobile = false;
 	export let coordinate: Coordinate;
 	export let selectedCoordinate: Coordinate;
 	export let onLeftClick: (c: Coordinate) => void;
 	export let onRightClick: (c: Coordinate) => void;
-	export let isTouchMode: boolean = false;
+	export let isTouchMode = false;
 
 	let isExploded = false;
 </script>
@@ -23,7 +23,7 @@
 		name={`Board cell at coordinates (${coordinate.ID()})`}
 		aria-label={`Board cell at coordinates (${coordinate.ID()})`}
 		tabindex="-1"
-		on:contextmenu|preventDefault={(e) => {
+		on:contextmenu|preventDefault={() => {
 			onRightClick(coordinate);
 		}}
 		on:click|preventDefault={(e) => {

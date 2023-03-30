@@ -18,7 +18,7 @@ padding-bottom: ${vv / (multiplier * 2)}${vt};
     border-bottom: ${vv / (multiplier * 3)}${vt} solid transparent;
     border-left: ${vv / multiplier}${vt} solid ${flagColor};
     transform: translate(-${(vv / 40).toFixed(3)}${vt},${(vv / 40).toFixed(
-			3
+			3,
 		)}${vt}); 
     `} />
 	<!-- TODO: write the transform in terms of vv and vt -->

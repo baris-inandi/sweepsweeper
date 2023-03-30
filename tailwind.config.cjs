@@ -5,9 +5,9 @@ module.exports = {
 		fontFamily: {
 			sans: ["'Rubik'", "'Roboto'", "ui-sans-serif", "system-ui"],
 			boxy: "'Silkscreen'",
-			game: "'Press Start 2P'"
+			game: "'Press Start 2P'",
 		},
-		extend: {}
+		extend: {},
 	},
-	plugins: []
+	plugins: [],
 };

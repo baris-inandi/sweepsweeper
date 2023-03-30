@@ -4,16 +4,15 @@
 	"private": true,
 	"author": "baris-inandi",
 	"scripts": {
-		"dev": "node concurrently.cjs",
-		"host": "node concurrently.cjs --host",
-		"vite-dev": "vite dev",
-		"vite-host": "vite dev --host",
+		"dev": "vite dev",
+		"host": "vite dev --host",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write .",
+		"lint": "npm run format && eslint --fix .",
+		"format": "prettier --plugin-search-dir . --write . --check .",
+		"eslint": "eslint --fix .",
 		"vercel": "vercel --prod"
 	},
 	"devDependencies": {
@@ -44,8 +43,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"fscreen": "^1.2.0",
-		"socket.io-client": "^4.5.3"
+		"fscreen": "^1.2.0"
 	},
 	"engines": {
 		"npm": ">=6.0.0",
