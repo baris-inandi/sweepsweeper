@@ -4,7 +4,7 @@
 	import isMobile from "../../../lib/utils/isMobile";
 
 	const MIN_BOARD_SIZE = 8;
-	const MAX_BOARD_SIZE = 36;
+	const MAX_BOARD_SIZE = 40;
 	const MIN_MINE_PERCENTAGE = 10;
 	const MAX_MINE_PERCENTAGE = 16;
 
